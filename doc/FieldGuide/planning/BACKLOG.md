@@ -269,7 +269,15 @@ cleanup, and telemetry using current source.  No robot code changed.
 - Added the `RobotBuilder` `TODO` to `Robot.java` (comment only) and entry
   21.10.  Whole-book check passes;  Chapter 21 rendered and reviewed alone.
 - Full rebuild, same commands as before.  Log `build/fullbook-build-3.txt`.
-  Status:  started.
+  Started 11:15;  `build_book` exit 0 at 11:15.  `finish_book` laid the book
+  out, then **failed at the PDF export at 11:41**:  the book PDF was open in
+  Adobe Acrobat, which locks it.  It still reported exit 0, so the failure
+  only showed in the log.  No PDFs were updated;  the 10:34 PDF predates 21.10.
+- Fixed `finish_book.ps1`:  it now checks every output PDF before starting
+  Word, stops at once naming any that are locked, and exits 1 on any error.
+  Tested:  with Acrobat open, it stops in about a second and exits 1.
+- Next:  close the PDF in Acrobat, then rerun `finish_book.ps1` alone (the
+  `.docx` from 11:15 is current).
 
 ### Next writing checkpoint
 

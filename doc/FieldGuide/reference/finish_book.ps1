@@ -39,6 +39,21 @@ $spots = @('spot_gear.png', 'spot_wrench.png', 'spot_tag.png', 'spot_wheel.png',
            'spot_battery.png', 'spot_servo.png', 'spot_bolt.png', 'spot_ball.png') |
   Where-Object { Test-Path (Join-Path $art $_) }
 
+# A PDF open in a viewer (Acrobat, a browser) is locked, and Word can't
+# overwrite it.  Check before the layout pass, which takes most of an hour,
+# rather than finding out at the export.
+$outputs = @($pdf) + @(Get-ChildItem (Join-Path $PSScriptRoot '..\build\pdf') -Filter '*.pdf' -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
+$locked = @(foreach ($file in $outputs) {
+  if (Test-Path $file) {
+    try { $stream = [IO.File]::Open($file, 'Open', 'ReadWrite', 'None'); $stream.Close() } catch { $file }
+  }
+})
+if ($locked.Count) {
+  Write-Error ("Close these PDFs first;  another program has them open:`n  " + ($locked -join "`n  "))
+  exit 1
+}
+
+$failed = $false
 $word = New-Object -ComObject Word.Application
 $word.Visible = $false
 $word.DisplayAlerts = 0
@@ -226,6 +241,11 @@ try {
     }
   }
   $doc.Close([ref]0)
+} catch {
+  # Report the failure in the exit code too, so a caller can tell.
+  Write-Error $_
+  $failed = $true
 } finally {
   $word.Quit()
 }
+if ($failed) { exit 1 }
