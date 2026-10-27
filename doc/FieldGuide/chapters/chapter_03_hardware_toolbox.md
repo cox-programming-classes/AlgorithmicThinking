@@ -55,7 +55,7 @@ far as the code is concerned.
 
 Two things go in.  The first is the type you expect back, here a `DcMotor`.
 The second is the device's name.  `motorName` is a parameter, so the name comes
-from whoever builds the intake.  `BillyMA`, the class that holds Billy's
+from whoever builds the intake.  `BillyMA`, the class that owns Billy's
 mechanisms, passes it in:
 
 ```java

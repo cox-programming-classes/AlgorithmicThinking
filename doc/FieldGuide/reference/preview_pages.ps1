@@ -18,7 +18,11 @@ try {
     $word.Visible = $false
     $word.DisplayAlerts = 0
     foreach ($key in $Keys) {
-        $path = (Resolve-Path (Join-Path $guideRoot "build/word/FieldGuide_Chapter$key.docx")).Path
+        # Files are named for their chapter's title;  take the newest one for this key.
+        $found = Get-ChildItem (Join-Path $guideRoot 'build/word') -Filter "FieldGuide_Chapter${key}*.docx" |
+            Sort-Object LastWriteTime -Descending | Select-Object -First 1
+        if (-not $found) { throw "No built Word file for chapter $key;  run build_book.lua first" }
+        $path = $found.FullName
         $doc = $word.Documents.Open($path, $false, $true)
         try {
             $null = $doc.Paragraphs.Count      # touch it before exporting;  see COMMON_ERRORS entry 1

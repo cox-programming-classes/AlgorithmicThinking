@@ -223,3 +223,201 @@ any setup.  If the same number appears in both, make it one constant.
 
 *See also:*  21.9, Chapter 8, Chapter 11
 
+## 22.4  One handle, unverified assumptions
+
+**The tell:**  two classes that call `hardwareMap.get(...)` for the same
+device, and only one of them doing the setup the device needs.
+
+`hardwareMap.get` hands back the same object every time you ask for the same
+name.  So two classes that both fetch `"imu"` have one device between them.  If one
+of them sets it up, the other one gets that setup too, without knowing it.
+That's the trap.  The second class works because of something a different
+class did, and nothing in its own code says so.
+
+The IMU is this codebase's live example, and 4.9 tells the whole story.
+`MecanumDrive` fetches the IMU and never initializes it.  `BillyRobot` fetches
+the same device and initializes it, so Billy's turns work.  `Wildbots2025`
+also builds a `MecanumDrive` and never initializes the IMU anywhere.  Same
+drive train code, and on that robot the heading comes from a device that was
+never told how its hub is mounted.
+
+It's the same shape as the turret problem in Chapter 13, one layer down.
+There, two pieces of code both *command* one part with no declared owner.
+Here, two classes both *assume* one device has been set up, and only one of
+them does it.
+
+**How to catch it:**  whenever you see `hardwareMap.get(SomeType.class,
+"someName")`, search the code for `"someName"`.  For every other hit, find out
+which one sets the device up.  If more than one class needs it, the fix is
+one owner, one setup, handed down (4.8).
+
+> **Try it.**  Run `grep -rn 'hardwareMap.get' TeamCode/src/main/java` from
+> the repository root, and sort the hits by configuration name.  You should
+> find `"imu"` twice, once in `BillyRobot` and once in `MecanumDrive`.  For
+> each other name, check that exactly one class fetches it.
+
+*See also:*  4.8, 4.9, Chapter 13
+
+## 22.5  Independent guards fighting over one field
+
+**The tell:**  two separate `if` statements, one after the other, that each
+set the same thing.
+
+Here's Billy's intake control as it was before commit `1a6809a`, from
+`BillyMA`:
+
+```java
+                    if (gamepad.dpad_up) {
+                        motor.setPower(0.75);
+                    }
+                    if (gamepad.dpad_down) {
+                        motor.setPower(-0.75);
+                    } else {
+                        motor.setPower(0);
+                    }
+```
+
+> **Predict.**  The driver presses up on the d-pad, and nothing else.  What
+> power does the motor end up with?
+
+Zero.  Step through it.  The first `if` sees `dpad_up`, and sets `0.75`.  The
+second `if` is a new statement with its own say.  `dpad_down` is `false`, so
+its `else` runs, and sets `0`.  The second call wins, every loop, so the
+intake never runs forward.  Down works, because the second `if` comes last.
+
+Read either block alone and it's correct.  The bug only shows when you notice
+that both blocks set `motor`, one after the other, with nothing linking them.
+
+The fix makes the conditions one chain, so exactly one branch runs (1.8).
+Commit `1a6809a` did that, and 2.8 shows the intake as it is now:  `if`,
+`else if`, `else`.
+
+The rule:  when two conditions are meant to be different settings of the same
+thing, make them arms of one `if` / `else if` / `else` chain.
+
+Here's a made-up example to test yourself on.  Which category is it, and what
+does pressing `left_bumper` alone do?
+
+```
+if (gamepad.left_bumper) { arm.setPosition(0.9); }
+if (gamepad.right_bumper) { arm.setPosition(0.1); } else { arm.setPosition(0.5); }
+```
+
+Category 4.  The second block's `else` sets `0.5` straight after the first
+sets `0.9`, so the left bumper does nothing you can see.
+
+**How to catch it:**  when two `if` statements sit next to each other, ask
+whether they both assign the same thing.  If they do, ask whether both are
+allowed to run in the same loop.  Usually the answer is no, and they should
+be one chain.
+
+*See also:*  1.8, 2.8, Chapter 8
+
+## 22.6  The SDK's silence isn't a happy path
+
+**The tell:**  a value from the SDK or a vendor library, used on the next
+line with no check.
+
+Code you call can hand back nothing:  `null`, an empty list, or a number that
+means "no reading."  An SDK method documents some of those, and some you find
+out about the hard way.  Each one has to be checked where your code receives
+it.
+
+`LimelightExtensions.tryGetFiducial` is the example, and it shows both halves
+of the rule.  The method hands back `null` on purpose when it can't find the
+tag, and every caller checks for that (4.5).  Its own call into the SDK can
+come back empty too.  The SDK's Limelight sample says `getLatestResult()`
+returns `null` if `start()` was never called, and an earlier version of the
+helper went straight from that call into `getFiducialResults()`.  Commit
+`1a6809a` added the check:
+
+```java
+        LLResult result = limelight.getLatestResult();
+        if (result == null)
+            return null;
+```
+
+Without it, a missing result crashed the OpMode with a `NullPointerException`
+(5.8).  And because the turret tracker calls this every loop, one empty result
+would have stopped the whole robot, mid-match.
+
+So there are two `null`s in this one method:  the one it hands back on purpose,
+and the one the SDK can hand to it.  Each one needs its own check.
+
+The same shape turns up with numbers.  A distance sensor with nothing in front
+of it hands back a very large number, and code that trusts it drives into a
+wall (4.4).  And it turns up with objects that look real:  the Limelight's
+`getBotpose()` always hands back a pose, even with no tags in view, so a
+`null` check passes every time (14.6).
+
+**How to catch it:**  for every call into the SDK, ask what it hands back when
+it has nothing to report.  Read the sample, the method's documentation, or
+`doc/limelight3a/` for the camera.  Then check for that answer on the very next
+line.
+
+*See also:*  2.7, 4.4, 4.5, 5.8, 14.6
+
+## Chapter summary
+
+Five bug shapes cover a great deal of what goes wrong on this robot.  Each one
+compiles, and each one reads fine inside the one method it lives in, because
+the evidence is split between two places:  two paths, two `if` statements, two
+classes, or your code and the code it calls.  Every one of them gets caught by
+the same question:  *what else touches this?*
+
+| Category | The tell | The question that confirms it |
+|---|---|---|
+| The loop must never stop (22.2) | a `while` or a sleep in code that runs every tick | does anything call this from inside the loop? |
+| Same mechanism, two conventions (22.3) | a TeleOp strategy and an autonomous verb on the same hardware | do they agree on signs, positions, and setup? |
+| One handle, unverified assumptions (22.4) | two `hardwareMap.get` calls for one name | which one sets the device up? |
+| Independent guards (22.5) | two `if` statements setting the same thing | can both run in the same loop? |
+| The SDK's silence (22.6) | an SDK result used unchecked | what does it hand back when it has nothing? |
+
+### Java in this chapter
+
+| Syntax | Where |
+|---|---|
+| `while` inside a method called every tick | 22.2 |
+| two `if` statements against one `if` / `else if` / `else` chain | 22.5 |
+| a `null` check on an SDK result | 22.6 |
+
+### Vocabulary
+
+**bug shape** -- a pattern of mistake that turns up again and again, in code
+that's otherwise unrelated.  (22.1)
+
+**the five categories** -- the five bug shapes in this chapter:  the stopped
+loop, two conventions, one handle, independent guards, and the SDK's
+silence.  (22.1)
+
+**tell** -- the one detail that gives a bug shape away before you've traced
+the whole bug.  (22.1)
+
+**tick** -- one pass through the OpMode's loop.  Chapter 12 owns it.  (22.2)
+
+### Check your understanding
+
+1. Name the five categories, each with its tell.  (22.1)
+2. Why does each of these bugs survive a careful read of the method it's in?
+   (22.1)
+3. A strategy lambda calls a method with `TrySleep(50)` inside a `while` loop.
+   What does the driver see while it runs?  (22.2)
+4. Where is waiting allowed, and how does `doAndWait` wait without stopping
+   the loop?  (22.2)
+5. A wrist's TeleOp strategy scores at `0.7`, and its autonomous verb scores
+   at `0.3`.  Which category, and what's the fix?  (22.3)
+6. Why does Billy's `turnToAngle()` read a correct heading, when
+   `MecanumDrive` never initializes the IMU?  (22.4)
+7. In the old intake code, what did pressing down on the d-pad do, and why
+   did it work when up didn't?  (22.5)
+8. Name the two `null`s in `tryGetFiducial`.  Which one did commit `1a6809a`
+   add a check for?  (22.6)
+9. Invent a bug for any one category, not from this codebase.  Then say what
+   question you'd ask to confirm it.  (22.1)
+
+## Where to go next
+
+Chapter 12 explains the loop and how to wait inside it.  Chapter 13 explains
+who owns a part when two pieces of code want it.  Chapter 21 has the design
+checklist and the questions to ask about a new mechanism (21.7, 21.8).
+

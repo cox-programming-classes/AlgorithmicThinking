@@ -441,3 +441,377 @@ file gets the first one right.
 > these, so a real rename is a pull request that updates the callers too.
 
 *See also:*  2.3, 2.9, Chapter 3, Chapter 14
+
+## 2.7  `LimelightExtensions`
+
+*Where it lives:*  `Extensions/LimelightExtensions.java`
+
+Billy's turret aims itself at an AprilTag.  Every loop, the tracker in
+`LimelightAutoTarget` asks the camera one question:  is the tag I want in
+view?
+
+```java
+            LLResultTypes.FiducialResult tag =
+                    LimelightExtensions.tryGetFiducial(
+                            limelight,
+                            targetTagId);
+
+            if(tag == null)
+            {
+                turret.reportStatus("Tag " + targetTagId + " not found.");
+                return stopTurret();
+            }
+```
+
+`Limelight3A` is the camera's type, and it comes from the FTC SDK, the same as
+`Gamepad`.  A **fiducial** is a marker a camera can find and identify.  On an
+FTC field the fiducials are AprilTags (Chapter 5).
+
+Here's the method that call reaches:
+
+```java
+    /**
+     * *look for a specific AprilTag Id using the limelight camera
+     * If the tag is not found, this method returns NULL
+     * @param limelight camera configured to read Fiducials
+     * @param tagId which tag id are you looking for.
+     * @return The desired FiducialResult or NULL if not found.
+     */
+    public static LLResultTypes.FiducialResult tryGetFiducial(
+            Limelight3A limelight,
+            int tagId)
+    {
+        LLResult result = limelight.getLatestResult();
+        if (result == null)
+            return null;
+
+        return result
+                .getFiducialResults()
+                .stream()
+                .filter(fr -> fr.getFiducialId() == tagId)
+                .findFirst()
+                .orElse(null);
+    }
+```
+
+`getLatestResult` hands back the newest batch of what the camera saw, as one
+`LLResult`.  If there's no result to read, the method hands back `null` right
+away (1.2).  Otherwise it searches the result's list of tags.  Read the chain
+from the top:  take the list of tags the camera found, keep the ones whose ID
+is `tagId`, take the first of those, and if the list came up empty, hand back
+`null`.  `fr -> fr.getFiducialId() == tagId` is a lambda (1.9), and Chapter 5
+takes the whole chain apart.
+
+### The name says what to check
+
+The method can come back empty-handed, and it says so twice.  The name starts
+with `try`, the same word `TrySleep` uses for a job that might not finish
+(2.4).  The doc comment says it outright:  *If the tag is not found, this
+method returns NULL.*  So a caller knows to check for `null` before using the
+answer, and `lookForTag` does it on the very next line.
+
+That's the third question of 2.9 answered well.  A student can use
+`tryGetFiducial` correctly from its name and its comment alone.
+
+### `tryFindOneOf`, and the three dots
+
+The second method looks for any one of several tags:
+
+```java
+    public static LLResultTypes.FiducialResult tryFindOneOf(
+            Limelight3A limelight,
+            int... tags)
+    {
+        LLResult result = limelight.getLatestResult();
+        if (result == null)
+            return null;
+
+        return result
+                .getFiducialResults()
+                .stream()
+                .filter(fr ->  Arrays.stream(tags).anyMatch(i -> i == fr.getFiducialId()))
+                .findFirst()
+                .orElse(null);
+    }
+```
+
+`ExampleStateMachineAuton` uses it to find out which of three tags is in
+front of the robot:
+
+```java
+                    LimelightExtensions.tryFindOneOf(
+                            robot.limelight,
+                            21, 22, 23);
+```
+
+> **Aside:  `int...`**
+>
+> Three dots after a parameter's type mean *any number of these*.  The caller
+> lists as many as it likes, separated by commas, and inside the method they
+> arrive as one array (2.6).  In the call above, `tags` is an array of three
+> numbers:  21, 22, and 23.  Java calls this a **varargs** parameter, short
+> for "variable number of arguments."
+
+The search works the same way as before, with a bigger question in the
+`filter`:  is this tag's ID any one of `tags`?  `anyMatch` answers `true` as
+soon as one number in the array passes the test.
+
+The answer is the first match in the *camera's* list, whatever order the call
+names the IDs in.  If tag 23 comes first in what the camera reports, that's
+the one you get, even though the call lists 21 first.  `findTags` checks the
+ID of whatever comes back, so it handles any of the three.
+
+### A narrower file, in the right place
+
+This file clears the first question of 2.9 by a smaller margin than the
+others.  `TrySleep` would help any program at all.  `LimelightExtensions`
+helps only code that has a Limelight 3A.
+
+Look at what the methods take, though.  The camera and the tag IDs both come
+in as parameters.  Billy passes `targetTagId`, and the example autonomous
+passes 21, 22, and 23.  Any robot with a Limelight could call either method
+unchanged.  The narrowing comes from the type the file extends, and every
+extension class narrows that way:  `GamepadExtensions` matters only to code
+with a gamepad.  Ask the first question about robots that carry the type, and
+this file passes.
+
+One job is waiting at the top of the class:
+
+```java
+    // TODO (students): BIOBUZZ goals are AprilTag *clusters* (4 tags sharing one origin).
+    // Add cluster search + origin estimation here - see doc/limelight3a/cluster-targeting-plan.md
+```
+
+Chapter 15 explains clusters and the plan for them.
+
+> **Argue it.**  The `TODO` puts cluster search in this file.  Finding a
+> cluster's origin takes the offsets of this season's goal tags, and those are
+> one game's facts, the kind the first question in 2.9 screens out.  Keeping
+> the whole cluster job in one file makes it easy to find.  Where should the
+> line go:  all of it here, all of it in a class of its own, or the search
+> here with the offsets handed in as a parameter?
+
+> **Try it.**  `tryFindOneOf` is still waiting for a doc comment.  Write one in the style
+> of `tryGetFiducial`'s:  what it looks for, what it hands back when it finds
+> nothing, and which tag it hands back when the camera sees more than one.  A
+> student reading only your comment should know to check for `null`, and
+> should know that the camera's order picks the tag that comes back.
+
+*See also:*  1.2, 1.9, 2.4, 2.9, Chapter 5, Chapter 15
+
+## 2.8  Too narrow, and too broad
+
+A shared file can go wrong in two directions.  A helper can be too narrow,
+about one robot when the file is for every robot.  Or the file can get too
+broad, and collect helpers that have little to do with each other.  The
+team's `Extensions` files avoid both today, so the example below is made up.
+
+### Too narrow
+
+Here's how Billy's intake reads the gamepad, in `BillyMA`:
+
+```java
+        intake = new SpinnyIntake(hardwareMap, "intakeMotor",
+                (motor, gamepad) -> {
+                    if (gamepad.dpad_up) {
+                    motor.setPower(0.75); }
+                    else if (gamepad.dpad_down) {
+                    motor.setPower(-0.75);
+                    } 
+                    else {
+                        motor.setPower(0);
+                    }
+                });
+```
+
+Up on the d-pad runs the intake forward at three-quarters power, down runs
+it backward, and anything else stops it.  Now here's a made-up method that
+copies that rule into `GamepadExtensions`.  This method is invented:
+
+```
+public static double GetBillyIntakeCommand(Gamepad gamepad) {
+    if (gamepad.dpad_up)   return 0.75;
+    if (gamepad.dpad_down) return -0.75;
+    return 0.0;
+}
+```
+
+> **Predict.**  Its only parameter is a `Gamepad`, and it's `static`, in the
+> right class.  Why doesn't it belong in `GamepadExtensions`?
+
+Ask the first question from 2.9:  would every robot the team builds want this
+method, unchanged?  Only a robot with an intake, run by those two buttons, at
+those two power levels.  That's one robot's design choice.  It's a fact about
+Billy, and the parameter list hides it, because a `Gamepad` is exactly what a
+`GamepadExtensions` method is supposed to take.  The body is where it fails.
+
+So the rule belongs where it is now:  in the lambda `BillyMA` hands its
+intake, which Chapter 8 calls a control strategy.  Put it in the shared file
+and every other robot gets a method made for Billy, right beside the ones it
+uses.
+
+### Too broad:  the junk drawer
+
+The other way to go wrong happens slowly.  Someone adds a one-off helper to a
+shared file because it seemed related enough.  Someone else adds another.
+Each one has one caller.  After a season the file is a place things get
+dropped.
+
+The test is a sentence.  Describe the whole file's job in one, and see if it
+still covers every method:
+
+| File | Its job, in one sentence |
+|---|---|
+| `ThreadExtensions` | pause safely |
+| `GamepadExtensions` | read a gamepad's sticks, cleaned up |
+| `AngleExtensions` | do arithmetic on headings that wrap around |
+| `LimelightExtensions` | find tags in what the Limelight sees |
+
+All four pass.  The day the sentence needs *"and also it has this one thing
+for the endgame routine,"* that method belongs somewhere else.
+
+*See also:*  2.5, 2.9, Chapter 8
+
+## 2.9  Does this helper belong in `Extensions`?  The three-question test
+
+You've written a small `static` method, and you're deciding where it goes.
+Ask three questions, every time.
+
+1. **Scope, from the top.**  Would every robot the team builds want this
+   method, unchanged?  For a helper on someone else's type, read "every
+   robot that has the type" (2.7).  This catches the method that's too narrow,
+   like `GetBillyIntakeCommand` (2.8).
+2. **Scope, from the bottom.**  Does the file's whole list of methods still
+   describe one job in a single sentence?  This catches the junk drawer (2.8).
+3. **Presentation.**  Could a student use this method correctly from its name
+   and the first line of its doc comment, without reading the body?  This
+   catches the trouble `AngleExtensions` has with its names (2.6).
+
+The first two ask where code lives.  The third asks what it's called.  Those
+are separate decisions, and a file can get one right and the other wrong.
+`AngleExtensions` passes the first two and has work left on the third.
+`tryGetFiducial` passes all three (2.7).
+
+### Three made-up proposals
+
+Here's the test run on three methods.  All three are invented.
+
+**`inchesToTicks(double inches, double wheelDiameter, int ticksPerRev)`**
+turns a distance into encoder ticks.  It belongs in `Extensions`.  Every robot
+with encoders on its wheels wants it, and every number it needs comes in
+through a parameter, so question 1 passes.
+
+**`inchesToTicks(double inches)`** does the same math with Billy's wheel size
+and encoder counts written inside it.  It fails question 1.  A different
+robot's wheels would quietly get Billy's numbers.  It belongs wherever that drive train's own numbers already live.
+
+**`shouldFireShooter(int ballCount, double batteryVoltage)`** decides when to
+shoot.  That's a decision about how to play the game, and it fails question 1
+before the others come up.  It belongs with the rest of that decision:  in
+`BillyMA`, or in a macro strategy (Chapter 13).
+
+The Watch out in 2.2 gives the same answer from a different side.  A helper
+that needs one robot's motor or settings to do its job is a helper about that
+robot.  Hand those things in as parameters, and it might pass question 1.  If
+it only makes sense with Billy's values, it belongs on Billy.
+
+> **Try it.**  Pick any `static` method in `TeamCode` outside the
+> `Extensions` folder.  Run the three questions on it, and write one line for
+> each answer.  If all three pass, you've found a candidate for
+> `Extensions`.  If question 1 fails, you've found a method that's in the
+> right place already.
+
+*See also:*  2.2, 2.4, 2.6, 2.7, 2.8, Chapter 13
+
+## Chapter summary
+
+An extension method is the team's Java version of a feature other languages
+have:  a `static` method in a `SomethingExtensions` class, taking the type it
+helps as its first parameter.  The pattern earns its place when you can't edit
+the type, when a convention would otherwise be copied into every caller, or
+when the logic is plain math.  Deciding what goes in a shared file takes three
+questions, and the third, about names, is separate from the first two.
+
+| To find out... | Read... |
+|---|---|
+| what an extension method is | 2.1 |
+| what `static` means, and why there's no `new GamepadExtensions()` | 2.2 |
+| why the team writes them at all | 2.3 |
+| how to pause, with the interruption handled | 2.4 |
+| how a stick reading gets cleaned up, and where that stops | 2.5 |
+| how to find the shortest turn between two headings | 2.6 |
+| how to ask the Limelight for a tag | 2.7 |
+| how a helper can be too narrow, or a file too broad | 2.8 |
+| whether your new helper belongs in `Extensions` | 2.9 |
+
+### Java in this chapter
+
+| Syntax | Where |
+|---|---|
+| `static` methods and fields | 2.2 |
+| `static final`, a constant | 2.2 |
+| a `private` constructor on a `final` class | 2.2 |
+| `try` and `catch` | 2.4 |
+| `long` | 2.4 |
+| `Math.abs` | 2.5 |
+| `while` | 2.6 |
+| arrays (`double[]`) and a `for` loop | 2.6 |
+| `int...`, varargs | 2.7 |
+
+### Vocabulary
+
+**constant** -- a field that's `static` and `final`, so there's one fixed
+copy for the whole program.  `DeadZoneRadius` is one.  (2.2)
+
+**deadzone** -- the band around zero that counts as zero, so a stick at rest
+reads exactly `0`.  Chapter 4 owns it.  (2.5)
+
+**extension method** -- in this codebase, a `static` method in a class named
+`SomethingExtensions` that takes the type it helps as its first parameter.
+`GamepadExtensions.GetLeftStickX(gamepad)` is one.  (2.1)
+
+**fiducial** -- a marker a camera can find and identify.  On an FTC field,
+an AprilTag.  Chapter 5 owns it.  (2.7)
+
+**junk drawer** -- a shared file that has collected unrelated one-off
+helpers, so its job no longer fits in one sentence.  (2.8)
+
+**`static`** -- belonging to the class, with no object.  You call a `static`
+method on the class's name.  (2.2)
+
+**the three-question test** -- scope from the top, scope from the bottom, and
+presentation:  the three questions that decide whether a helper belongs in
+`Extensions`.  (2.9)
+
+**utility class** -- a class with only `static` members, a named home for a
+set of related helpers.  (2.2)
+
+**varargs** -- a parameter written with three dots, like `int... tags`, that
+takes any number of values.  Inside the method they arrive as an array.  (2.7)
+
+### Check your understanding
+
+1. Java has no way to add a method to `Gamepad`.  What does the team write
+   instead, and how does the call look different from the C# version?  (2.1)
+2. Why can't a `static` method use a field like `intake`?  (2.2)
+3. Name the three reasons the `Extensions` folder exists, with one file for
+   each.  (2.3)
+4. What does `TrySleep` hand back if its sleep gets cut short?  (2.4)
+5. `GamepadExtensions.GetLeftStickY` returns `-0.6`.  Which way is the stick
+   pushed, and what decides what that number does?  (2.3, 2.5)
+6. What does `getSmol(10, 350)` hand back, and which way does `turnToAngle`
+   turn?  (2.6)
+7. `tryFindOneOf(limelight, 21, 22, 23)` comes back with tag 23 while 21 is
+   also in view.  How can that happen?  (2.7)
+8. Write the one-sentence job of a shared file you know.  Then name a method
+   that would break the sentence.  (2.8)
+9. A teammate proposes `armToScoringHeight(DcMotor arm)`, with Billy's arm
+   height written inside.  Run the three questions on it.  Where does it
+   belong?  (2.9)
+
+## Where to go next
+
+Chapter 4 explains the deadzone and the other ways a raw sensor reading gets
+cleaned up.  Chapter 5 takes apart the tag search in `LimelightExtensions`.
+Chapter 8 is where robot-specific rules like Billy's intake buttons live.
+Chapter 12 shows how to wait while the rest of the robot keeps running.

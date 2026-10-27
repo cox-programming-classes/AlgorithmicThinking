@@ -30,6 +30,7 @@ this chapter puts together.
 | 21.7 | How do you know a design is done? |
 | 21.8 | What are the seven questions for a new mechanism? |
 | 21.9 | What does a full design pass look like? |
+| 21.10 | Which projects are open, and what would a `RobotBuilder` take? |
 
 ---
 
@@ -604,6 +605,107 @@ writes the class.
 
 *See also:*  21.7, 21.8, 22.3, Chapter 13, Chapter 19
 
+## 21.10  The open projects, and the RobotBuilder
+
+*Where it lives:*  every `TODO` in `TeamCode`, and `RobotModel/Robots/Robot.java`
+
+The team keeps its list of open work in the code itself, as `TODO` comments
+written right where the work is (1.10).  Search the project for `TODO` and
+you have the list.  They come in very different sizes, so pick one that fits
+the time you have.
+
+| Size | The project | Read first |
+|---|---|---|
+| a few minutes | this season's AprilTag IDs in the three OpModes | 5.9 |
+| an afternoon | check the travel limits for the whole of an autonomous move, in `DoublyLimitedMotor` | 8.6 |
+| an afternoon | compare the TeleOp drive signs with the autonomous ones, in `MecanumDrive` | 22.3 |
+| a week | one owner for the IMU, then field-relative drive and heading hold | 4.9, 22.4 |
+| a week | a turn to a heading that doesn't stop the loop, in `turnToAngle` | 22.2 |
+| a week or more | travel limits for the turret, and a grip sensor for the claw | 4.10, 7.8 |
+| a week or more | the first sensor on an assembly:  a ball-ready sensor on Billy | 4.7 |
+| a season | aiming at a cluster of tags | 15.9 |
+| open-ended | a `RobotBuilder` | this entry |
+
+The last one is the hardest thing on the list, and it's there for an advanced
+student who wants a real challenge.
+
+### Every robot is a class written from scratch
+
+The `Robot` class does its job well.  It fixes the order of each loop
+(10.3), owns the one telemetry flush (10.6), and gives every robot the same
+shape.  The cost is that every season's robot is a new class, written by
+hand.  `BillyRobot` and `Wildbots2025` are each a constructor that fetches
+devices, builds a drive train and an assembly, and wires up strategies.  Most
+of what they do is the same job, with different parts.
+
+The `TODO` at the top of `Robot.java` asks for a way to describe a robot in a
+few lines and have the code put it together.  Here's the sketch it gives for
+Billy:
+
+```java
+    //      RobotBuilder.From(new MecanumDrive(...))
+    //          .WithMechAssembly(new BillyMA(hardwareMap))
+    //          .WithRobotStrategy(...)
+    //          ...
+    //          .Build();
+```
+
+That's a sketch in a comment, and no `RobotBuilder` exists yet.  A
+**builder** is an object whose only job is to put another object together, a
+piece at a time, and hand it over at the end with `Build()`.  Each `With...`
+method hands back the builder itself, so the calls chain with dots, the same
+way the stream chain does in 5.7.  An object built to be used in a chain like
+that has a **fluent interface**.
+
+The `TODO` asks for the same thing one layer down, too:  a builder for
+`MechAssembly`, so an assembly can be put together from components, organized
+in particular ways, with strategies at each layer.
+
+### Why it's very hard
+
+A builder is dependency injection (21.5) taken all the way:  every part of the
+robot is handed in, and nothing is written by hand.  That's where the
+difficulty comes from, because everything the hand-written constructor does
+quietly now has to be said out loud.  The `TODO` lists the questions to answer
+before writing any code.
+
+- **What does `Build()` hand back?**  `Robot` is abstract, and
+  `getAutonomousRobot()` is generic (Chapter 7), so the builder needs a
+  concrete robot class of its own to build.
+- **Where do the robot-wide sensors get set up?**  The Limelight and the IMU
+  belong to the robot (4.6), and something has to fetch and configure them
+  once.
+- **How does two-phase setup still happen?**  `initializeSubsystems()` has to
+  run exactly once, after everything is assigned (7.4).
+- **How do assists and claims fit in?**  Billy starts its tracker with
+  `startAssist`, and the claims decide who drives the turret (Chapter 13).
+
+Start on paper.  Write out what `BillyRobot`'s constructor does, line by
+line, and mark each line as either a part the builder would be handed or a
+step it would have to take.  If a step won't fit, that's the first design
+question.
+
+> **Argue it.**  A builder costs a lot of code that the team has to
+> understand and keep working.  It buys a new robot described in a dozen
+> lines, with nothing written from scratch.  For a team that builds one
+> robot a season, is that a trade-off worth making?  What would have to be
+> true for it to pay off?
+
+### If an assistant helps you write it
+
+You can use a coding assistant on a project like this:  Claude, Codex, or
+anything else.  The `TODO` is plain about what that means:  you are *"still
+personally responsible for being able to explain what the code does, how it
+does it, and why it is written that way."*
+
+That applies to every line that goes into the robot, whoever typed it.  Judges
+will ask you about your code, and they expect you to know it.  A student who
+can explain how a complicated piece of code works, and why it's built that
+way, impresses them.  Before you commit code an assistant wrote, read it until
+you could explain it to a teammate without the assistant in the room.
+
+*See also:*  1.10, 5.7, 7.4, 10.3, 21.5, 21.6, Chapter 13
+
 ---
 
 ## Chapter summary
@@ -625,6 +727,7 @@ when a design is done.
 | Billy replaces `Robot.update`;  the other robots keep it | 21.6 |
 | conflicts settled in one place, by claims | 21.7 |
 | one mechanism, seven questions, worked through | 21.8, 21.9 |
+| the open projects, from minutes to a `RobotBuilder` | 21.10 |
 
 ### Java in this chapter
 
@@ -642,12 +745,19 @@ then assemblies, then the robot, then OpModes and autonomous strategies.  (21.1)
 **build order** -- the fixed order the files of a new robot are written in,
 following what depends on what.  (21.3)
 
+**builder** -- an object whose only job is to put another object together, a
+piece at a time, and hand it over at the end.  The `RobotBuilder` in
+`Robot.java`'s `TODO` would be one.  (21.10)
+
 **dependency injection** -- handing an object the things it depends on
 through its constructor, so the code that builds it decides what they are.
 (21.5)
 
 **design checklist** -- eight questions a finished robot design should answer
 yes.  (21.7)
+
+**fluent interface** -- methods that each hand back the object they were
+called on, so calls chain with dots.  (21.10)
 
 **template** -- a starting shape for a class, with its blanks marked.  The
 team's are in `doc/NewRobotDesignWorkflow.md`.  (21.4)
@@ -672,6 +782,10 @@ exist, and which behaviors belong at each layer, before writing code.  (21.1)
    default?  (21.6)
 8. Pick a mechanism of your own and answer the seven questions in 21.8.  Then
    run the checklist and name every no.  (21.8, 21.9)
+9. Write out `BillyRobot`'s constructor as a list of steps.  Which ones would
+   a `RobotBuilder` be handed, and which would it have to do itself?  (21.10)
+10. An assistant writes part of your code.  What do you have to be able to say
+    about it before it goes on the robot?  (21.10)
 
 ## Where to go next
 

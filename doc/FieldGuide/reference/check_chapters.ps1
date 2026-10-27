@@ -18,7 +18,8 @@ $javaSources = @(foreach ($root in @($javaRoot, $sampleRoot)) {
 })
 $historical = @(
     @{ Chapter = '09'; Label = '1a6809a'; Revision = '1a6809a^'; File = 'TeamCode/src/main/java/org/firstinspires/ftc/teamcode/RobotModel/Mechs/Assemblies/BillyMA.java' },
-    @{ Chapter = '10'; Label = '34c22ea'; Revision = '34c22ea'; File = 'TeamCode/src/main/java/org/firstinspires/ftc/teamcode/RobotModel/Robots/BillyRobot.java' }
+    @{ Chapter = '10'; Label = '34c22ea'; Revision = '34c22ea'; File = 'TeamCode/src/main/java/org/firstinspires/ftc/teamcode/RobotModel/Robots/BillyRobot.java' },
+    @{ Chapter = '22'; Label = '1a6809a'; Revision = '1a6809a^'; File = 'TeamCode/src/main/java/org/firstinspires/ftc/teamcode/RobotModel/Mechs/Assemblies/BillyMA.java' }
 )
 function Test-Excerpt([string]$source, [string[]]$chunks) {
     $offset = 0
@@ -45,8 +46,12 @@ foreach ($file in $files) {
     $key = [regex]::Match($file.Name, 'chapter_(\d\d)_').Groups[1].Value
     $text = [IO.File]::ReadAllText($file.FullName).Replace("`r`n", "`n")
     $count = [regex]::Matches($text, '(?m)^## \d+\.\d+\s').Count
-    if ($count -lt 6 -or $count -gt 10) { $problems.Add("$($file.Name): $count entries") }
-    foreach ($suffix in @("planning/chapter_${key}_notes.md", "book/opening_${key}.md")) {
+    # Chapter 0, the glossary (98) and the postscript (99) are front and back
+    # matter:  no numbered entries, and no title-page opening required.
+    $matter = @('00','98','99') -contains $key
+    if (-not $matter -and ($count -lt 6 -or $count -gt 10)) { $problems.Add("$($file.Name): $count entries") }
+    $required = if ($matter) { @("planning/chapter_${key}_notes.md") } else { @("planning/chapter_${key}_notes.md", "book/opening_${key}.md") }
+    foreach ($suffix in $required) {
         if (-not (Test-Path (Join-Path $guideRoot $suffix))) { $problems.Add("Missing $suffix") }
     }
     foreach ($mark in @(@('Predict',3), @('Argue it',2))) {
@@ -58,8 +63,12 @@ foreach ($file in $files) {
     $referenceKeys = @($files | ForEach-Object { [int]([regex]::Match($_.Name, 'chapter_(\d\d)_').Groups[1].Value) })
     foreach ($m in [regex]::Matches($text, '(?<![\d.])\d{1,2}\.\d+(?![\d.])')) {
         if ($referenceKeys -notcontains [int]($m.Value.Split('.')[0])) { continue }
-        # Ratios such as 18.93:1 are numerical data.  PROCESS caps entries at 10.
-        if ([int]($m.Value.Split('.')[1]) -gt 10) { continue }
+        # Chapter 0 has no numbered entries, so 0.05 and 0.8 are values.
+        if ([int]($m.Value.Split('.')[0]) -eq 0) { continue }
+        # Ratios such as 18.93:1 are numerical data.  PROCESS caps entries at 10,
+        # and entries start at 1, so values such as 20.0 and SDK 12.0 are data too.
+        $entryPart = [int]($m.Value.Split('.')[1])
+        if ($entryPart -gt 10 -or $entryPart -eq 0) { continue }
         if (-not $entries.ContainsKey($m.Value)) { $problems.Add("$($file.Name): unresolved entry $($m.Value)") }
     }
     Write-Output "$($file.Name): $count entries, $([Text.Encoding]::UTF8.GetByteCount($text)) bytes"

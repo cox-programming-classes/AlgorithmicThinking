@@ -338,7 +338,7 @@ angle zero.  The team's reference says so plainly:
 
 Here's a made-up line that looks careful:
 
-```java
+```
 if (result.getBotpose() != null) { /* drive using the botpose */ }
 ```
 

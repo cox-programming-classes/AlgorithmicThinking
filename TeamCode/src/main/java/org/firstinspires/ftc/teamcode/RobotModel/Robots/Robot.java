@@ -52,6 +52,33 @@ import java.util.Set;
 public abstract class Robot
 {
 
+    // TODO (open-ended project, VERY hard, for an advanced student): a RobotBuilder.
+    //  This abstract class does its job well, but it means every season's robot is a
+    //  new class written from scratch (BillyRobot, Wildbots2025), even though most of
+    //  what each one does is "take a drive train, take an assembly, wire up the
+    //  strategies". The challenge: a RobotBuilder that hands back a working Robot from
+    //  whole cloth, so Billy becomes something like
+    //
+    //      RobotBuilder.From(new MecanumDrive(...))
+    //          .WithMechAssembly(new BillyMA(hardwareMap))
+    //          .WithRobotStrategy(...)
+    //          ...
+    //          .Build();
+    //
+    //  and then the same for MechAssembly: an assembly built from components organized
+    //  in particular ways, with strategies at each layer.
+    //
+    //  Questions to answer before writing code: what Build() hands back, when Robot is
+    //  abstract and getAutonomousRobot() is generic;  where the robot-wide sensors (the
+    //  Limelight, the IMU) get fetched and set up;  how initializeSubsystems() still runs
+    //  exactly once, after everything is assigned;  and how assists and claims
+    //  (BillyRobot.startAssist) fit in. See doc/FieldGuide, entry 21.10.
+    //
+    //  If you use a coding assistant for this (Claude, Codex, anything), you are still
+    //  personally responsible for being able to explain what the code does, how it does
+    //  it, and why it is written that way. Judges will expect that, and a student who can
+    //  talk knowledgeably about complex code impresses them.
+
     protected interface IRobotStrategy {}
 
     protected Robot.IRobotStrategy strategy;

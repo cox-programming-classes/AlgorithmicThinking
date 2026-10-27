@@ -2,8 +2,8 @@
 
 What's done, who has what, and what's next.  Read `../PROCESS.md` first.
 Code baseline for every quotation:  `305fb81` (master at the audit), plus the
-one `TODO` comment Codex added to `DoublyLimitedMotor.java`, which is
-uncommitted and waiting on Jason.
+one `TODO` comment Codex added to `DoublyLimitedMotor.java`, committed in
+`eab2e14` and still waiting on Jason's keep, reword, or drop.
 
 ## History, briefly
 
@@ -36,12 +36,12 @@ Claude drafter ids are historical; no Codex sub-agents were launched.
 
 | Ch | State at snapshot | Drafter (agent id, resumable with SendMessage) |
 |---|---|---|
-| 0, 98, 99 | not started | Claude, last |
+| 0, 98, 99 | drafted 2026-10-27;  0 and 99 await Jason's own voice | Claude |
 | 1 | 10 entries, notes, opening | `a4dc877b00902bbee` (Ch 1-2) |
-| 2 | 6 entries, notes; unfinished closing sections, no opening | same |
+| 2 | 9 entries, closing sections, notes, opening; checked and rendered (2026-10-27) | Claude draft, Claude completion |
 | 3 | 10 entries, notes, opening | `a1f767dabdb891fb0` (Ch 3-5) |
-| 4 | 2 entries, partial notes | same |
-| 5 | not started | same |
+| 4 | 10 entries, closing sections, notes, opening; checked and rendered (2026-10-27) | Claude draft, Claude completion |
+| 5 | 10 entries, closing sections, notes, opening; checked and rendered (2026-10-27) | Claude |
 | 6 | 8 entries, notes, opening | `ab5d5d829aeb4c81f` (Ch 6-8) |
 | 7 | 9 entries, notes, opening; checked and rendered | Claude draft, Codex completion |
 | 8 | 8 entries, notes, opening; checked and rendered | Codex |
@@ -51,10 +51,10 @@ Claude drafter ids are historical; no Codex sub-agents were launched.
 | 12 | 9 entries, notes, opening | `a805554bac31d3f33` (Ch 12-13) |
 | 13 | 10 entries, notes, opening; checked and rendered | Claude start, Codex completion |
 | 14 | 9 entries, notes, opening | `a7a5e9fc94915d1a5` (Ch 14-15) |
-| 15 | 9 entries, notes;  no opening | same |
+| 15 | 9 entries, closing sections, notes, opening; checked and rendered (2026-10-27) | Claude draft, Claude completion |
 | 16-20 | drafted;  voice pass done;  checks pass | done |
 | 21 | 9 entries, notes, opening | `a750d834c5b6943fd` (Ch 21-22) |
-| 22 | 3 entries, partial notes; no opening | same |
+| 22 | 6 entries, closing sections, notes, opening; checked and rendered (2026-10-27) | Claude |
 
 **If the session dies again:**  agent ids only work inside the session that
 made them.  In a new session, start a fresh drafter per unfinished chapter
@@ -158,11 +158,133 @@ start, 2 had six entries;  4 had two;  7 had nine and closing sections;
 sections, notes, and opening.  It explains claims, selection, manual dispatch,
 cleanup, and telemetry using current source.  No robot code changed.
 
+### Chapter 2 continuation - Claude, 2026-10-27, school machine
+
+- Rebuilt the ignored `build/` art here:  `make_cover.ps1` and `make_art.ps1`
+  both exit 0, 07:48;  cover and 33 art PNGs written.  Cover and `ch13.png`
+  opened and checked.  The home machine's build logs were never in Git.
+- Wrote 2.7-2.9, the closing sections, and `book/opening_02.md`.  Notes
+  updated.  `check_chapters.ps1 -Keys @('02')` passes.
+- Build and preview, from the repo root:
+  `pandoc lua doc/FieldGuide/reference/build_book.lua 02`, then
+  `& ./doc/FieldGuide/reference/preview_pages.ps1 -Keys @('02')`.
+  Expected outputs:  `build/word/FieldGuide_Chapter02.docx`,
+  `build/preview/chapter_02.pdf`, page PNGs, contact sheet.
+- Build exit 0, preview exit 0, PowerShell PID 36512, 07:53;  19 pages.
+- **Finished and reviewed:**  contact sheet, and page 14 at full size (the
+  Argue it and Try it boxes, the wrapped `TODO` comment).  Code, tables and
+  boxes fit.  Page 7 holds only 2.4's `See also` line;  that entry predates
+  this session and was left for Jason's edit.  The standalone build has no
+  book title page, so `opening_02.md` waits on the book pass.
+- Chapter 2 is 33 KB, above PROCESS's 12-25 KB guide.  Jason to decide on
+  trimming;  2.7 overlaps Chapter 15's 15.1 and 15.5 a little.
+
+### Chapter 4 continuation - Claude, 2026-10-27, school machine
+
+- Wrote 4.3-4.10, closing sections, `book/opening_04.md`;  notes updated.
+  `check_chapters.ps1 -Keys @('04')` passes.
+- Build and preview, same commands as Chapter 2 with key `04`.  Expected:
+  `build/word/FieldGuide_Chapter04.docx`, `build/preview/chapter_04*`.
+- First build and preview exit 0 (PID 75996, 08:03), 15 pages.  Page 12's
+  quoted IMU `TODO` wrapped badly, and page 9 held only 4.6's `See also`.
+  Replaced the quote with prose and tightened 4.6;  rebuilt (PID 15976,
+  08:04), 14 pages, checks pass.
+- **Finished and reviewed:**  final contact sheet and page 12.  Page 4 holds
+  only 4.2's `See also` line;  4.2 predates this session, left for Jason.
+
+### Chapter 5 - Claude, 2026-10-27, school machine
+
+- Wrote the whole chapter:  5.1-5.10, closing sections, notes,
+  `book/opening_05.md`.  Moved deadband to Chapter 4 in PROCESS's table.
+- Build and preview, same commands with key `05`.  Build and preview exit 0,
+  PID 33428, 08:08;  14 pages.  Checks pass.
+- **Finished and reviewed:**  contact sheet.  Code, tables and boxes fit;  the
+  SDK sample's long telemetry line in 5.4 wraps once.  No orphan pages.
+
+### Chapters 15 and 22 - Claude, 2026-10-27, school machine
+
+- 15:  wrote `book/opening_15.md`, and filled in the notes file from the
+  chapter text.  Checks pass.
+- 22:  wrote 22.4-22.6, closing sections, notes, `book/opening_22.md`.  Added
+  a chapter-22 historical entry (`1a6809a^`, `BillyMA.java`) to
+  `check_chapters.ps1`.  Checks pass.
+- Build and preview, keys `15` and `22`.  Both exit 0, PID 63696, 08:11.
+  15:  16 pages;  22:  11 pages.
+- **Finished and reviewed:**  both contact sheets.  Code, tables and boxes
+  fit.  Chapter 15's page 4 holds only 15.1's `See also` line;  15.1 predates
+  this session, left for Jason.
+
+### First full-book build - Claude, 2026-10-27, school machine
+
+- Goal:  the whole draft as one PDF, Chapters 1-22 (0, 98, 99 not written,
+  so the build skips them).
+- Commands from the repo root:
+  `pandoc lua doc/FieldGuide/reference/build_book.lua book`, then
+  `powershell -ExecutionPolicy Bypass -File doc/FieldGuide/reference/finish_book.ps1`.
+- Expected:  `build/book/Field_Guide_Draft.docx`, `chapters.tsv`,
+  `Field_Guide_Draft.pdf`, and one PDF per chapter in `build/pdf/`.
+- Log:  `build/fullbook-build.txt`.  Started 09:00:02, PowerShell PID 27252,
+  Word PID 43548.
+- `build_book` exit 0 at 09:00:04;  skipped 00, 98, 99.  `finish_book` exit 0
+  at 09:28:06, and Word quit.  The gap-finding pass took most of the time.
+  64 entry page breaks bent, 36 large gaps with pictures in 8, 7 blank pages
+  for right-hand chapters.  Book PDF:  347 pages.  22 chapter PDFs in
+  `build/pdf/`, Chapter 1 from page 11 to Chapter 22 ending on page 347.
+- **Finished and reviewed:**  rendered pages 1-4, 9-12, 31-34, 80-82, 95-97,
+  346-347 (the Read tool can't open PDFs on this machine;  rendered with the
+  Windows PDF renderer, as `preview_pages.ps1` does).  Cover, contents with
+  page numbers, part pages, chapter title pages with art and openings all
+  present.  Pages 9 and 95 are the intended blanks before part pages.  The
+  other 327 pages weren't inspected one by one.
+
+### Missing sections, file names, style pass - Claude, 2026-10-27
+
+- Built files are now named for their chapter's title
+  (`FieldGuide_Chapter02_Extension_Methods.docx`, and the same for the cut
+  PDFs):  `word_name()` in `build_book.lua`.  `preview_pages.ps1` finds the
+  newest file for a key.  Old untitled outputs deleted.
+- Wrote `chapter_00_how_to_use.md`, `chapter_98_glossary.md` (246 terms,
+  generated from every chapter's Vocabulary), `chapter_99_postscript.md`, and
+  their notes.  0 and 99 are drafts in Jason's voice, for him to rewrite.
+- `check_chapters.ps1` treats 00/98/99 as front and back matter (no entry
+  count, no opening), and skips `0.x` values.  Whole book passes.
+- Style pass, whole book:  every PROCESS grep clean.  Fixed possession-sense
+  `hold` in 3, 7, 9 (twice) and 10;  abstract `stays` and a slogan closing in
+  99.  Read the last line of every section.  Chapter 22's negations describe
+  bugs, and stayed.  Not done:  a full read-aloud of every paragraph;  the
+  Codex-drafted chapters (8, 11, 13, 17, 18) read stiffer than the rest and
+  would benefit from Jason's ear.
+- Full rebuild:  same commands as the first full build, plus `all` first.
+  Log `build/fullbook-build-2.txt`.  Started 09:43;  `build_book` exit 0 at
+  09:44;  `finish_book` exit 0 at 10:42 (58 minutes, Word PID 33344).  38
+  large gaps, pictures in 8;  8 blank pages.  Book:  368 pages, Chapter 0
+  through the Postscript.  25 titled chapter PDFs in `build/pdf/`.
+- **Finished and reviewed:**  rendered pages 2, 9-13, 353-355, 366-368.
+  Contents lists Chapter 0;  Chapter 0, glossary and Postscript title pages
+  have their art;  tables and letter headings lay out cleanly.  Page 13 is the
+  intended blank before Part 1.
+
+### 21.10 and the RobotBuilder TODO - Claude, 2026-10-27
+
+- Added the `RobotBuilder` `TODO` to `Robot.java` (comment only) and entry
+  21.10.  Whole-book check passes;  Chapter 21 rendered and reviewed alone.
+- Full rebuild, same commands as before.  Log `build/fullbook-build-3.txt`.
+  Status:  started.
+
 ### Next writing checkpoint
 
-Continue Chapter 2 from **2.7, LimelightExtensions**, after reading its notes,
-source lesson, and current helper implementation.  Then finish 4, 5, 15's
-supporting files, and 22.  Use the process's run record for long scripts.
+Chapters 1-22 are all drafted, as of 2026-10-27.  Next:  Jason's editorial
+read, then Chapter 0, the glossary (98) and the postscript (99).  Chapter 0
+and 99 are in Jason's own voice.  Use the process's run record for long
+scripts.
+
+Orphaned `See also` pages in the standalone renders, all in entries from
+the first session:  2.4, 4.2, 15.1.
+
+Whole-book `check_chapters.ps1` (no `-Keys`) passes, 2026-10-27, after two
+fixes:  the checker now skips `N.0` numbers (`20.0`, SDK `12.0`), which it
+was reading as entry references, and 14.6's invented `getBotpose` line moved
+to a plain fence.  The style pass and Jason's read are still ahead.
 
 1. Finish drafting 1-15 and 21-22.
 2. Chapter 0, glossary (98), postscript (99).

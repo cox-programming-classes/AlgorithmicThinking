@@ -802,8 +802,9 @@ begins `// TODO (project, and a good one for somebody who wants the drive train 
 and lays out field-relative driving.  Some are the next step for a feature,
 like the travel limits planned in `Claw` and `Turret`.
 
-When this chapter was written, the Java code had twelve `TODO` comments.
-Search the whole project for `TODO` to see today's list.
+When this chapter was written, the Java code had fourteen `TODO` comments.
+Search the whole project for `TODO` to see today's list.  21.10 sorts them
+by size, as projects.
 
 ### Reading a whole class
 

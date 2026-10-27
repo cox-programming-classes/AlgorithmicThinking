@@ -95,3 +95,15 @@ Within Part 7, exact entries:  22.3 (shared constants), 22.4 (the IMU).
 None.  Macro, assist and claim are Chapter 13's;  21.4 and 21.7 use them in a
 sentence with a pointer and leave them out of the Vocabulary.  Template method
 is Chapter 10's;  21.6 points there.
+
+## 2026-10-27, Claude:  21.10
+
+Added 21.10, the open projects and the `RobotBuilder`, at Jason's request.
+The `TODO` it describes is at the top of the class body in `Robot.java`
+(inside the class, so the Javadoc stays attached to the declaration).  New
+vocabulary:  builder, fluent interface, also added to the glossary.  The
+project sizes in 21.10's table are the drafter's estimates;  Jason may want
+to adjust them.  Chapter 1's `TODO` count is now fourteen (thirteen before
+this one;  the `DoublyLimitedMotor` `TODO` came after Chapter 1 was written).
+The assistant-responsibility sentence is quoted in prose, because its code
+lines wrap badly in a code box.

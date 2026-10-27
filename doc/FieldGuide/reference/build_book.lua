@@ -493,11 +493,19 @@ end
 -- One chapter, for Flint
 ---------------------------------------------------------------------------
 
-local function word_name(key)
+-- The file is named for the chapter's title, so a folder of them reads like
+-- the contents:  "Chapter 2 - Extension Methods" becomes
+-- FieldGuide_Chapter02_Extension_Methods.docx.
+local function word_name(key, title)
   if key == "00" then return "FieldGuide_00_How_to_Use.docx" end
   if key == "98" then return "FieldGuide_98_Glossary.docx" end
   if key == "99" then return "FieldGuide_99_Postscript.docx" end
-  return ("FieldGuide_Chapter%s.docx"):format(key)
+  local name = ("FieldGuide_Chapter%s"):format(key)
+  if title then
+    local words = title:gsub("^Chapter %d+%s*%-%s*", ""):gsub("[^%w%s]", ""):gsub("%s+", "_")
+    if words ~= "" then name = name .. "_" .. words end
+  end
+  return name .. ".docx"
 end
 
 local function build(key)
@@ -516,7 +524,7 @@ local function build(key)
   if subtitle then doc.meta.subtitle = inlines_of(subtitle) end
   doc.meta.date = part and (part.name .. "  ·  " .. BOOK_TITLE) or BOOK_TITLE
 
-  local path = pandoc.path.join { out_dir, word_name(key) }
+  local path = pandoc.path.join { out_dir, word_name(key, pandoc.utils.stringify(inlines_of(title))) }
   local f = assert(io.open(path, "wb"))
   f:write(finish_docx(pandoc.write(doc, "docx", { reference_doc = reference })))
   f:close()
@@ -590,8 +598,8 @@ local function compile_book()
       else
         local md = protect_spaces(read_file(source))
         local title, subtitle, body = take_title(trim_rules(md))
-        starts[#starts + 1] = { (word_name(item):gsub("%.docx$", ".pdf")),
-          pandoc.utils.stringify(inlines_of(title)) }
+        local heading = pandoc.utils.stringify(inlines_of(title))
+        starts[#starts + 1] = { (word_name(item, heading):gsub("%.docx$", ".pdf")), heading }
 
         blocks:insert(pandoc.Header(1, inlines_of(title)))
         if subtitle then blocks:insert(styled("Subtitle", inlines_of(subtitle))) end

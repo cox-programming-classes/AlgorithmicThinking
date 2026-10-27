@@ -365,7 +365,7 @@ screen as it was.  Sending it puts the new page in front of the drivers.
 
 A component writes, and leaves the sending to `Robot`.  `Robot.updateTelemetry()`
 asks every layer to write, and then calls `telemetry.update()` once, at the
-end of the loop (Chapter 10).  So one screen holds one loop's worth of lines,
+end of the loop (Chapter 10).  So one screen shows one loop's worth of lines,
 from every mechanism, in the same order every time.  A component that sent
 the page itself would send half a screen and clear it, and the rest of that
 loop's lines would show up on the next screen, a loop late.

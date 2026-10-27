@@ -429,8 +429,8 @@ correct when you read it alone.
 The comment at the top of `Robot.java` records that this happened here.  An
 earlier design passed telemetry into every loop, "causing multiple competing
 flush points and mid-cycle updates."  The 2025-26 telemetry refactor
-(`doc/TelemetryContract.md` tells it) moved the flush here, and the rule has
-held since.  The strategies that report from inside a loop, like
+(`doc/TelemetryContract.md` tells it) moved the flush here, and the code has
+followed the rule since.  The strategies that report from inside a loop, like
 `BillyRapidFire`, write through an autonomous object's `reportStatus` and
 have no telemetry object of their own to flush with (9.5).
 

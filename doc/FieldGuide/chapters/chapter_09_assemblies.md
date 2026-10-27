@@ -7,7 +7,7 @@
 Billy's shooter is four mechanisms working together:  an intake, a pusher, a
 flywheel, and a turret.  Each one is a component, and Chapter 7 covers how a
 component is built.  This chapter is about the class one layer up, the one
-that holds all four and makes them act as one subsystem.  That class is an
+that owns all four and makes them act as one subsystem.  That class is an
 **assembly**.
 
 An assembly does three jobs.  It passes the gamepad down to every component.
@@ -491,7 +491,7 @@ is exactly why one of the pair is easy to forget.
 
 > **Argue it.**  `MechAssembly` could keep a list of its components and loop
 > over it in one `updateTelemetry` of its own.  That costs something.  The
-> base class would need a way to hold components of different types, every
+> base class would need a way to store components of different types, every
 > assembly would lose its own header and order, and `giveInstructions`
 > couldn't skip a claimed part by name.  What it buys is a checklist the base
 > class keeps for you:  add a component to the list once, and every loop

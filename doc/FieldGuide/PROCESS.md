@@ -296,10 +296,10 @@ The owner explains it, in an Aside or an entry.  Every other chapter points.
 | Ch | Owns |
 |---|---|
 | 1 | class, object, field, type, `int`/`double`/`boolean`/`String`, `public`/`private`/`protected`, `final`, method, signature, parameter, return type, `void`, constructor, `new`, the dot and chaining, `extends` and subclass, `super(...)`, `abstract`, `interface`, `@Override`, `if`/`else if`/`else`, `!` `&&` `\|\|`, lambda (enough to recognize one), `null`, comments, `TODO`, configuration name |
-| 2 | `static`, extension method, utility class, the three-question test for a helper |
+| 2 | `static`, extension method, utility class, varargs (`int...`), the three-question test for a helper |
 | 3 | hardware map, `DcMotor`, `DcMotorEx`, run modes, encoder and ticks, `Servo`, `CRServo`, `TouchSensor`, `DigitalChannel`, `DistanceSensor`, color sensor and hue, IMU, yaw, heading, webcam, `VisionPortal`, Driver Station configuration |
-| 4 | sensor against actuator, reading against meaning, noise, threshold, hysteresis, deadzone, out-of-range values, a missing sensor, the sensor ownership rule |
-| 5 | AprilTag, fiducial, tag ID, `tx` and `ty`, pipeline, polling, proportional control, gain, deadband, `ftcPose`, `NullPointerException`, `stream()`/`filter`/`findFirst`/`orElse` |
+| 4 | sensor against actuator, reading against meaning, noise, threshold, hysteresis, deadzone, deadband, out-of-range values, a missing sensor, the sensor ownership rule |
+| 5 | AprilTag, fiducial, tag ID, `tx` and `ty`, pipeline, polling, proportional control, gain, `ftcPose`, `NullPointerException`, `stream()`/`filter`/`findFirst`/`orElse` |
 | 6 | layer, OpMode, `Robot`, `DriveTrain`, `MechAssembly`, `MechComponent`, TeleOp and autonomous, instructions flow down, capabilities flow up, composition |
 | 7 | the component contract, two-phase construction, the telemetry buffer (write against flush), inner class, generics (`<T extends ...>`), cast, the two kinds of component, reuse first |
 | 8 | control strategy, Strategy pattern, functional interface, decorator, the rule for which layer a rule belongs to |
@@ -324,10 +324,19 @@ The owner explains it, in an Aside or an entry.  Every other chapter points.
 
 Read [`APPALACHIAN_ACADEMIC_STYLE.md`](../../../ClaudeWritingProject/style-guide/APPALACHIAN_ACADEMIC_STYLE.md)
 and [`WRITING_COMMON_ERRORS.md`](../../../ClaudeWritingProject/style-guide/WRITING_COMMON_ERRORS.md)
-in full before you write a sentence.  They live in
-`C:\Users\kyrok\OneDrive\Documents\GitHub\ClaudeWritingProject\style-guide\`.
-Then read one OODP chapter for the register:
+in full before you write a sentence.  They live in the `ClaudeWritingProject`
+repository's `style-guide\` folder, which sits in a different place on each
+machine:
+
+| Machine | `ClaudeWritingProject` |
+|---|---|
+| home | `C:\Users\kyrok\OneDrive\Documents\GitHub\ClaudeWritingProject\` |
+| school | `C:\Users\jcox\Documents\GitHub\ClaudeWritingProject\` |
+
+Then read one OODP chapter for the register, where `OODP_Lessons` is checked
+out (home only, for now):
 `C:\Users\kyrok\OneDrive\Documents\GitHub\OODP_Lessons\Course\chapters\chapter_04_collections_and_strategies.md`.
+Without it, read a finished chapter of this book for the register:  Chapter 13.
 
 **The register is OODP's chapters, at a middle schooler's reading level.**
 Second person.  Contractions are welcome.  Instructions are written as
