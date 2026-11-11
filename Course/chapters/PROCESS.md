@@ -149,6 +149,11 @@ them.
 pandoc lua Course/reference/build_chapter.lua 01
 ```
 
+An appendix builds the same way, by its key:  `A1` is Appendix 1, the FTC SDK
+reference (`appendix_1_ftc_sdk.md`), one piece, for students and teachers.
+Its rule matches the chapters':  every signature was read from the SDK jars
+with `javap`, and every behavior from `javap -c`.
+
 Needs only pandoc 3.  It writes one Word file per meeting to
 `Course/chapters/build/word/` (for Flint, which takes `.docx`) and one Canvas
 page per meeting to `Course/chapters/build/canvas/`, with every style inline,

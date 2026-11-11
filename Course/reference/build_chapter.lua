@@ -56,6 +56,34 @@ local CHAPTERS = {
   end)(),
 }
 
+-- The prologue:  how the book works, and where it came from.  One piece.
+CHAPTERS["00"] = (function()
+  local cfg = draft(0, "chapter_00_prologue.md", { { starts = nil } })
+  cfg.label = "Prologue"
+  cfg.word_name = "Prologue.docx"
+  cfg.canvas_name = "prologue.html"
+  return cfg
+end)()
+
+-- Appendix 2, the Limelight 3A, which is a computer of its own.  One piece.
+CHAPTERS["A2"] = (function()
+  local cfg = draft(0, "appendix_2_limelight.md", { { starts = nil } })
+  cfg.label = "Appendix 2"
+  cfg.word_name = "Appendix2.docx"
+  cfg.canvas_name = "appendix-2.html"
+  return cfg
+end)()
+
+-- Appendix 1, the FTC SDK reference, for students and teachers both.  One
+-- piece:  a Word file for Flint, and a Canvas page.
+CHAPTERS["A1"] = (function()
+  local cfg = draft(0, "appendix_1_ftc_sdk.md", { { starts = nil } })
+  cfg.label = "Appendix 1"
+  cfg.word_name = "Appendix1.docx"
+  cfg.canvas_name = "appendix-1.html"
+  return cfg
+end)()
+
 local NBSP = "\u{A0}"
 
 -- Smart typography stays off.  It would turn `--` into an en dash and straight
@@ -794,11 +822,16 @@ end
 -- A table in the list starts a unit, on a page of its own ahead of its first
 -- chapter.
 local BOOK = {
+  "00",
   "01",
+  { unit = "Appendices", name = "Reference", about = "For students and teachers both." },
+  "A1",
+  "A2",
 }
 local BOOK_TITLE = "Algorithmic Thinking"      -- a working title
--- A working tagline, from Jason's words on 2026-11-10.  His to change.
-local BOOK_TAGLINE = "We make the road by walking."
+-- The subtitle names the course's setting (Jason, 2026-11-11).  A working
+-- wording, his to change.
+local BOOK_TAGLINE = "Design Patterns for FIRST Tech Challenge Robots"
 
 local function styled(style, inlines)
   return pandoc.Div({ pandoc.Para(inlines) }, { ["custom-style"] = style })

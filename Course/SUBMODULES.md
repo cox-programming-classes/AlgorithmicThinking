@@ -17,7 +17,7 @@ git config --global core.longpaths true
 ```
 
 Some FTC SDK paths are long enough to pass Windows' 260-character path limit,
-especially under `ReferenceCopy/`.  Without this setting the clone stops with
+especially under `TeamRepo/`.  Without this setting the clone stops with
 `Filename too long`, and the submodules never get fetched.  A Mac doesn't need
 it.
 
@@ -61,7 +61,7 @@ git config --global submodule.recurse true
 Register each new starter as a submodule as soon as it exists.  The steps:
 
 1. Build the starter in its own folder at the top of this repository, beside
-   `Course/` and `ReferenceCopy/`.  Name it `LessonNN_Name`.
+   `Course/` and `TeamRepo/`.  Name it `LessonNN_Name`.
 2. Inside it:  `git init -b main`, add the files, and make the first commit.  A
    repository with no commits can't be a submodule.
 3. From the top of this repository:
@@ -131,13 +131,41 @@ repository, every time a lesson repo has commits that this one points at.
 After a lesson repo changes later:  commit and push it first.  Then, in this
 repository, commit the lesson folder (it shows as a changed submodule) and push.
 
+## The team's repository
+
+`TeamRepo/` is the team's own repository, `WinsorRobotics26-27`, registered as
+a submodule that follows its `master` branch.  Like a lesson folder, it records
+one exact commit, and it moves only when someone moves it.  The appendices and
+lesson plans were checked against the commit it records.
+
+Work on the team's code happens in the team's own clone, beside this
+repository in `GitHub/Robotics/WinsorRobotics26-27`.  Push it from there first.
+Then bring `TeamRepo/` up to the team's latest `master`, from the top of this
+repository:
+
+```
+git submodule update --remote TeamRepo
+git add TeamRepo
+git commit -m "TeamRepo: up to the team's latest master"
+```
+
+Check the chapters that name the team's code before pushing this repository.
+
+Next season, point it at the new season's repository:
+
+```
+git submodule set-url TeamRepo https://github.com/the-winsor-school/WinsorRobotics27-28.git
+git submodule update --remote TeamRepo
+git add .gitmodules TeamRepo
+```
+
 ## When it goes wrong
 
 | What you see | What it means | Fix |
 |---|---|---|
 | `Filename too long` during a clone on Windows | a path passed Windows' 260-character limit, and the checkout stopped before the submodules | `git config --global core.longpaths true`, delete the half-made clone, and clone again |
 | A lesson folder is empty after cloning | the submodules were never fetched | `git submodule update --init --recursive` |
-| `did not contain` or `not our ref` | this repository points at a lesson commit that was never pushed | push that lesson repo from the computer that has the commit, then try again |
+| `did not contain` or `not our ref` | this repository points at a lesson or team commit that was never pushed | push that repo from the computer that has the commit, then try again |
 | `Repository not found` | the URL in `.gitmodules` is wrong, the lesson isn't published yet, or you lack access | check `.gitmodules` against GitHub; fix with `git submodule set-url` |
 | No Publish button in GitHub Desktop | the lesson repo has a remote already | `git -C LessonNN_Name remote remove origin`, then publish |
 | Commits in a lesson folder seem to vanish | it was on a detached HEAD | `git -C LessonNN_Name switch main` before working; recover with `git reflog` |

@@ -35,7 +35,7 @@ problems are all in [`Course/SUBMODULES.md`](Course/SUBMODULES.md).
 | Folder | What it is |
 |---|---|
 | [`Course/`](Course/) | the course plan, the decisions behind it, and how-tos |
-| [`ReferenceCopy/`](ReferenceCopy/) | a snapshot of the robot code from 2026-11-10, with the team's documents |
+| [`TeamRepo/`](TeamRepo/) | the team's own repository, `WinsorRobotics26-27`, as a submodule, with the team's documents |
 | `Lesson01_RobotObjectModel/` | the Lesson 1 starter (a submodule) |
 
 Each code folder is its own Android Studio project.  Open them one at a time.
@@ -49,6 +49,6 @@ International](https://creativecommons.org/licenses/by-nc-sa/4.0/) (CC BY-NC-SA
 
 The FTC SDK keeps its own license from *FIRST*:  `FtcRobotController/`, the
 Gradle build, and the libraries that come with them.  That license is in
-[`ReferenceCopy/LICENSE`](ReferenceCopy/LICENSE), and in `LICENSE-FIRST` in each
-lesson starter.  Material under `ReferenceCopy/doc/` from *FIRST*, LEGO, and
+[`TeamRepo/LICENSE`](TeamRepo/LICENSE), and in `LICENSE-FIRST` in each
+lesson starter.  Material under `TeamRepo/doc/` from *FIRST*, LEGO, and
 other publishers keeps its own terms.

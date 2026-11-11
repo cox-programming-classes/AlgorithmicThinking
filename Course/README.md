@@ -12,7 +12,7 @@ course title can only change a little with each re-proposal.  The title doesn't
 set the syllabus.
 
 The material is the robot code, written over several years by students in this
-course.  `ReferenceCopy/` is a snapshot of it, taken on 2026-11-10.  The first
+course.  `TeamRepo/` is the team's own repository, as a submodule.  The first
 half of the course works in lesson starter repos beside it, each one stripped to
 what its lesson needs.  After the midterm (a point in the content, not a date),
 students work in the full code.  Some students are on the FTC team and some
@@ -86,7 +86,7 @@ what's already settled:
   case for `IControlStrategy`.  Later topics should arrive the same way.
 - **Build on the fall course, don't repeat it.**  Strategy, State, and
   extensions were all met in C#.  This course goes deeper.
-- **No FTC knowledge assumed.**  The game is color.  `ReferenceCopy/doc/FlintLessons/` was
+- **No FTC knowledge assumed.**  The game is color.  `TeamRepo/doc/FlintLessons/` was
   written for the team, and the course doesn't assume anyone has read it.
 
 ## Pacing
@@ -102,7 +102,7 @@ Course/
   SUBMODULES.md             cloning with the lesson repos, making and publishing a new one
   sessions/                 one note per working session:  how the course got made
   lessons/                  each lesson's plan, and the dialogue it was built from
-ReferenceCopy/              a snapshot of the robot code (2026-11-10), with the team's doc/
+TeamRepo/                   the team's repository (a submodule), with the team's doc/
 Lesson01_RobotObjectModel/  the Lesson 1 starter:  the base bot, with dumb components
 ```
 

@@ -1,3 +1,7 @@
 [submodule "Lesson01_RobotObjectModel"]
 	path = Lesson01_RobotObjectModel
 	url = https://github.com/cox-programming-classes/Lesson01_RobotObjectModel.git
+[submodule "TeamRepo"]
+	path = TeamRepo
+	url = https://github.com/the-winsor-school/WinsorRobotics26-27.git
+	branch = master

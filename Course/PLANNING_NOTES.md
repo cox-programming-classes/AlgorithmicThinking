@@ -520,6 +520,172 @@ that project.  Jason:  *"go for it"*.
 - Still to come, after Chapter 1 is reviewed:  the Flint prompt, and the
   Canvas manifest.  The printed book waits for more chapters.
 
+### 2026-11-11 - the book's subtitle
+
+> "We make the road by walking" can't be the subtitle lol.  That's a whole
+> different book ;)  Calling what we are doing "Functional Programming" is
+> also a bit of a stretch though since Java (or at least the version we are
+> stuck with) doesn't have a good way to represent a lot of the concepts we
+> really want:  First Class Functions, etc.  even Extensions are done
+> sideways.  Let's have the subtitle reference the FIRST Tech Challenge
+> context of the course
+
+- *Approved:*  the subtitle names FIRST Tech Challenge, and stays clear of
+  "Functional Programming."
+- *Under review:*  the wording.  Claude's working version is *Design Patterns
+  for FIRST Tech Challenge Robots*, since the course is a patterns course.
+- *Approved (2026-11-11):*  "excellent I like this subtitle."
+
+### 2026-11-11 - Appendix 1, the FTC SDK
+
+> Let's do a little work on a reference section.  In the Processing-Sprite
+> course project also found in the GitHub folder, we have Apendixes built
+> there with a Library reference.  We should provide a detailed reference for
+> the FTC base code as one apendix, lets build that right now
+
+- *Approved:*  scope is the FTC SDK (not the team's Robot Object Model), and
+  the audience is *"everyone, teachers and students both need the
+  reference"*, so it gets a Canvas page as well as a Word file.
+- `Course/chapters/appendix_1_ftc_sdk.md`, modeled on Processing-Sprite's
+  `reference_api.md`:  six parts, sections A1.1 to A1.15, ending in Known
+  issues.  Covers every SDK class the starter and `ReferenceCopy/` use.
+- Verified against the SDK 12.0.0 jars in the Gradle cache with `javap`
+  (signatures) and `javap -c` (behaviors).  Findings worth carrying into
+  lessons:  `...WasPressed()` is consumed by its first reader (Lesson 2's two
+  components on one gamepad);  `Telemetry`'s `" : "` separator doubles the
+  starter's trailing-colon captions;  `Limelight3A.getLatestResult()` returns
+  an empty result, so the team's null check never fires;  `CRServo` extends
+  `DcMotorSimple`;  `LinearOpMode` is a Template Method.
+- *Under review:*  two items are marked to confirm on a robot:  how the Driver
+  Station shows the `get` exception, and the doubled-colon display.
+
+### 2026-11-11 - Appendix 1, the rest of the toolbox
+
+> lets add documentation to the FTC SDK appendix for the other Objects even
+> the ones we don't have used in the reference code.  Especially Sensors.
+> Kids can't know how to add a tool if they don't know that it exists~
+
+- *Approved:*  a new Part Six, "The rest of the toolbox" (A1.15 to A1.28):
+  how to add a device, distance, color, digital, analog, and voltage sensors,
+  odometry (Pinpoint, OTOS, OctoQuad), other IMUs, webcams and the
+  VisionPortal (AprilTag, color blob, predominant color), HuskyLens, extended
+  servos and the SPARK Mini, lights, the hubs and bulk reads, and the older
+  Modern Robotics sensors.  Known issues moved to Part Seven (A1.29), with
+  five new rows.
+- Inventory from the SDK 12.0.0 jars;  signatures from `javap`, behaviors from
+  `javap -c`.  Code lines quoted from FIRST's own sample OpModes in
+  `ReferenceCopy/FtcRobotController/.../external/samples/`, which compile
+  against this SDK, and each section names its sample.  One example (the
+  potentiometer) is ours, and says so.
+- New finds:  in 12.0.0, AprilTag detections split into single and cluster
+  types, and only a single tag has an `id`;  the REV 2m distance sensor ignores
+  `distanceOutOfRange`;  the REV touch sensor reads `false` when pressed as a
+  `DigitalChannel`;  bulk caching is `OFF` by default.
+
+### 2026-11-11 - Appendix 2, the Limelight 3A
+
+> Limelight3A definitely needs a whole appendix of its own because it is a
+> complicated onboard computer of its own
+
+> we should update the documentation to the 12.0.0 version
+
+- *Approved:*  `Course/chapters/appendix_2_limelight.md`, A2.1 to A2.18:  two
+  computers (what runs where, setup, pipelines);  the driver (lifecycle,
+  background polling, commands);  `LLResult` (validity checks, the main
+  target, timing, the five target lists, finding one tag);  poses, MegaTag1
+  and 2, field maps;  Python, status, calibration, snapshots;  known issues.
+  Appendix 1's A1.11 points to it.
+- Source:  the team's notes in `ReferenceCopy/doc/limelight3a/`, re-verified.
+  The published 11.2.1 and 12.0.0 source archives were diffed:  every
+  Limelight file, and `Pose3D`, `Position`, `YawPitchRollAngles`, and
+  `Quaternion`, are identical.  Camera-side facts (setup, the web page,
+  firmware keys) are from Limelight's documentation, and the appendix says so.
+- The team's notes now say 12.0.0, with honest dates:  researched 2026-09-12
+  against 11.2.1, re-verified 2026-11-11 against 12.0.0.  This changes
+  `ReferenceCopy/`, which is a snapshot;  the competition repository's copy of
+  those notes still says 11.2.1.
+- The Aside on streams and `Optional` (A2.11) is factual only:  what the code
+  does, and its C# equivalents.  Where the course takes `Optional` further is
+  Jason's call, and the appendix leaves it there.
+
+### 2026-11-11 - the Prologue
+
+> Lets also build an intro section similar to the other books as well
+
+- `Course/chapters/chapter_00_prologue.md`, on the frame of the OODP and
+  Processing-Sprite prologues:  what the book is, where it came from, how a
+  chapter runs, how to read one, the marks.
+- Built from Jason's own words in this file and nothing else.  The tagline,
+  *"The common language of humans and robots,"* is from his explanation of the
+  title.  The "appendix" passage is his "biological appendix."  The secret
+  goal stays out:  the prologue asks whether the complexity is worth it, and
+  leaves the answer to the course.
+- *Under review:*  three **[For Jason]** gaps:  the course's history, homework,
+  and the Flint helper's name and rules.
+- *Approved (2026-11-11):*  "We don't need to talk about the politics of
+  course naming."  The first trim (keeping the appendix joke) was "still
+  bad."  Now the paragraph is one plain line on Java, and the book doesn't
+  mention "Functional Programming" at all.
+
+### 2026-11-11 - `ReferenceCopy/` becomes the `TeamRepo/` submodule
+
+> Can we swap out the ReferenceCopy snapshot with a sub-module link to the live
+> competition repo?
+
+This reverses the 2026-11-10 decision that the robot code here is a snapshot.
+Jason, on the branch:  *"I've merged the textbook into master~"*.
+
+- *Approved:*  `TeamRepo/` is a submodule of
+  `the-winsor-school/WinsorRobotics26-27`, following `master`.  The folder
+  name is Jason's choice, season-neutral, so next season only the URL changes.
+- *Approved:*  the 12.0.0 Limelight notes were committed in the team repo
+  (`1ace5a2`, on `master` and `textbook`), and `TeamRepo/` points at that
+  commit.  Jason's uncommitted Field Guide edits there were left alone.
+- `ReferenceCopy/` was removed;  its history stays in this repo's log.
+- `.github/workflows/check-competition-manual.yml` was deleted, which settles
+  its *Under review* from 2026-11-10.  It maintains the team's game-manual
+  mirror, the team repo runs its own copy, and this repo can't commit inside a
+  submodule.
+- Repointed:  both `README.md` files, `SUBMODULES.md` (with a new section on
+  moving `TeamRepo/` forward and swapping seasons), Appendix 1, and Appendix 2.
+- *Under review:*  whether this answers the 2026-11-10 question of where
+  students work after the midterm.
+- Open:  the team's `master` is eight commits ahead of GitHub.  It has to be
+  pushed before this repo is, or a clone can't fetch `TeamRepo/`.
+
+### 2026-11-11 - Appendix 1, encoders
+
+> We need another thing in the reference section:  How to use Encoders, both
+> those attached to motors and using an encoder that is not built into the
+> motor itself (i.e. an encoder attached to a shaft that is on the output end
+> or a shaft driven by a servo as oopsed to the dcmotor spindle itself)
+
+- *Approved (by request):*  a new Part Seven, Encoders, in Appendix 1:  A1.29
+  the encoder in a motor (ticks per turn from the SDK's motor types, direction,
+  resetting, ticks to inches), A1.30 `RUN_USING_ENCODER` and `RUN_TO_POSITION`,
+  A1.31 encoders of their own (on a motor port's connector, on a servo-driven
+  shaft with the loop in code, absolute encoders, the OctoQuad), A1.32 choosing
+  one.  Known issues moved to Part Eight, A1.33, and its cross-references
+  followed.  Six new known-issue rows.
+- Checked in SDK 12.0.0's compiled code:  `REVERSE` negates position,
+  velocity, and targets;  `RUN_TO_POSITION` uses the power's absolute value;
+  setting power with no target throws `TargetPositionNotSetException`;
+  `isBusy()` is `false` outside `RUN_TO_POSITION`;  the default tolerance is 5,
+  sent with the next target;  `RUN_USING_ENCODER` scales power by the motor
+  type's top speed;  the SDK resets no encoders between OpModes;  the goBILDA
+  5202/3/4 type is one entry at 2786 ticks;  an unconfigured motor gets
+  TETRIX's 1440;  four motor ports per hub.
+- The team's code reads an encoder in one place (`SpinnyIntake`'s
+  telemetry), so this part is toolbox, like Part Six.  Three examples are
+  ours, with invented labels, and say so:  ticks per arm degree, reading an
+  external encoder, and a proportional loop for a servo-driven shaft.
+- That proportional loop is the course's first feedback controller, in an
+  appendix.  Jason:  *"The servo example might come up as a lesson, I haven't
+  planned that far, but it is one I want to do.  If we write a lesson on PID,
+  it will go there."*
+- *Under review:*  a lesson on PID, built from the servo-driven shaft in
+  A1.31.  Wanted, not yet placed in the sequence.
+
 ## What's next
 
 1. Jason reviews the new `README.md`.
