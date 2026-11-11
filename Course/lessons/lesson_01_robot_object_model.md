@@ -31,12 +31,9 @@ place without it.
 
 ## The One New Idea
 
-**[For Jason:  the one sentence.  A candidate, assembled from the planning
-notes:  *"The parts on a robot exist as conceptual entities too, arranged in
-layers from the most general (the Robot) to the most concrete (the
-components), and the configuration is where the physical and the conceptual
-meet."*  Keep it, cut it down, or replace it.]**
-
+**The parts on a robot exist as conceptual entities too, arranged in layers
+from the most general (the Robot) to the most concrete (the components), and
+the configuration is where the physical and the conceptual meet.**
 ---
 
 ## Learning Goals
@@ -54,9 +51,10 @@ Students will be able to:
 5. Tell an abstract class from a concrete one:  a `DriveTrain` *must* drive; a
    `StandardTankDrive` has two motors and knows how to use them.
 6. (Meeting 5)  Explain why swapping `StandardTankDrive` for `OneStickTank` is
-   one line of code, and what that line depends on.
+   one line of code, what that line depends on, and what the choice between
+   the two drive trains trades.  (It's a flavor, a driver's preference.)
 
-**[For Jason:  check these against what you want them to leave with.]**
+Meeting 5 is hazy on purpose for now.
 
 ---
 
@@ -139,10 +137,13 @@ maybe a mechanism.  The different column is what fills each slot.
 
 ### The visual object model
 
-Draw the robot as its parts.
+Draw the robot as its parts.  Jason draws it from scratch on the board.  The
+form is a simplified UML diagram:  boxes and arrows, with no properties and no
+behaviors.  A version already exists and can be regenerated, for handouts and
+the chapter.  It comes back every lesson, until students see it in their
+dreams.
 
-**[For Jason:  who draws it, and where it goes afterward.  On the board, in
-students' notes, or both?  Is there a version you've drawn in earlier runs?]**
+**[For Jason:  where the existing diagram lives, or how you regenerate it.]**
 
 ---
 
@@ -274,6 +275,9 @@ else back:  code shouldn't start before the model is in place.
 
 - Two robots:  one tank drive with a simple mechanism, one mecanum drive with
   a different mechanism.
+- **Props for "components":**  at least a loose motor, or a disembodied
+  jointed component assembly.  Something a student can hold that is one
+  component and nothing else.
 - A starter configuration on the Driver Station for the tank robot, with the
   labels the starter asks for.  **[For Jason:  if the tank robot isn't the
   base bot, Meeting 3's trace needs a robot whose labels match the code.]**

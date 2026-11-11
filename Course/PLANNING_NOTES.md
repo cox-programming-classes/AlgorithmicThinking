@@ -506,6 +506,20 @@ that project.  Jason:  *"go for it"*.
   (`python` itself isn't on the path); Word; Windows PowerShell 5.1, no
   PowerShell 7.
 
+### 2026-11-10 - the chapter pipeline, first piece
+
+- `Course/chapters/PROCESS.md`, adapted from OODP's:  Java for C#, Gradle and
+  the robot for the console, a reading-first Lesson 1, and the style guide in
+  `ClaudeWritingProject/style-guide/`.
+- `Course/reference/build_chapter.lua`, copied from OODP with only its
+  configuration changed:  series and book title "Algorithmic Thinking",
+  Chapter 1 split into four meetings, and a working book tagline from Jason's
+  own words, *"We make the road by walking."*  His to change.
+- Output goes to `Course/chapters/build/word/` and `build/canvas/`, which git
+  ignores (`build/`).  Rebuild on any computer with pandoc 3.
+- Still to come, after Chapter 1 is reviewed:  the Flint prompt, and the
+  Canvas manifest.  The printed book waits for more chapters.
+
 ## What's next
 
 1. Jason reviews the new `README.md`.

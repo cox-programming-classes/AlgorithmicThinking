@@ -58,3 +58,6 @@ lint/intermediates/
 lint/generated/
 lint/outputs/
 lint/tmp/
+
+# Generated on every build of a chapter
+Course/reference/chapter-reference.docx

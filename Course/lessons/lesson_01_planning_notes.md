@@ -238,6 +238,78 @@ caller pass `null`, so the constructor also calls
 with a clear message instead of a crash later.  The `driveTrain != null`
 checks are gone.  `mechAssembly` stays optional.
 
+## 2026-11-10 - Jason's comments on the first draft
+
+Written into the draft plan, then moved here word for word.
+
+On the one new idea:
+
+> *"^^ Good sentence.  Remind me to have other props for \"components\"  I
+> should have at least a loose motor or dis-embodied jointed component
+> assembly"*
+
+On the learning goals:
+
+> *"This is a good list.  Meeting 5 is hazy on purpose at this point and
+> that's OK.  Ultimately that one should end with understanding the
+> choice/tradeoff between the two drive trains (which really is just a flavor
+> or preference.)"*
+
+On the visual object model:
+
+> *"The simplified UML diagram (no proproerties no behaviors, just boxes with
+> arrows) exists, and can be re-generated easily.  I will also definitely draw
+> it from scracth on the board, and after a few weeks the students should be
+> seeing it in their dreams at night."*
+
+And on what comes next:
+
+> *"Ok, I've wrtten some comments along the way.  Lets work from this for now.
+> And we'll come back to it once we have some hard copy lessons down."*
+
+- *Approved:*  the one new idea, as drafted.
+- *Approved:*  the learning goals.  Meeting 5 ends on the trade-off between
+  the two drive trains, which is a flavor, a driver's preference.  It stays
+  hazy for now, on purpose.
+- *Approved:*  the visual model is the simplified UML diagram:  boxes and
+  arrows, no properties, no behaviors.  Jason draws it from scratch on the
+  board.  It recurs until students dream about it.
+- Prep:  props for "components", at least a loose motor or a disembodied
+  jointed component assembly.
+- Next:  build the hard-copy lesson materials from this draft.  Come back to
+  the plan once they exist.
+
+## 2026-11-10 - Chapter 1, first draft (Claude)
+
+`Course/chapters/chapter_01_robot_object_model.md`, built with
+`pandoc lua Course/reference/build_chapter.lua 01` into four Word files and four
+Canvas pages, one per meeting (Parts One to Four).  Meeting 5 has no part yet,
+because the plan leaves it hazy.
+
+Every code excerpt is copied from the starter at `7fd7854`.  Unverified, until
+Jason sees it on a robot:
+
+- **1.5's Check:**  what the base bot does under the starter configuration
+  (sticks drive the treads, the lift stops at each switch, the bumpers run the
+  claw).  It's read from the code.
+- **1.6:**  the misspelled-label message.  The chapter asks students to copy
+  whatever the Driver Station shows, and quotes nothing.
+
+Choices for Jason to check:
+
+- *Under review:*  **1.3's diagram is ASCII**, standing in for the simplified
+  UML diagram Jason already has.  Swap in the real one once we know where it
+  lives.
+- *Under review:*  **Part Four** asks students to write down, before class, the
+  one thing about the layers that still doesn't make sense.  That's homework
+  of a kind, and homework is still open.
+- *Under review:*  **The Asides compare Java to C#** at each first use:
+  `extends`, annotations, `@Override`, `throws`, `.class`, `final`, and
+  `Objects.requireNonNull` against `ArgumentNullException.ThrowIfNull`.
+- *Under review:*  **1.10 explains "abstract" with an analogy**, buying "a
+  vehicle" without buying a particular one.  It's Claude's.
+- The tagline is Jason's cold-open line.
+
 ## The shape so far
 
 | Meeting | What happens |
