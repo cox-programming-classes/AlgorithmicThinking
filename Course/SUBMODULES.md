@@ -21,7 +21,7 @@ especially under `ReferenceCopy/`.  Without this setting the clone stops with
 `Filename too long`, and the submodules never get fetched.  A Mac doesn't need
 it.
 
-From the folder that should hold it:
+From the folder it should go in:
 
 ```
 git clone --recurse-submodules https://github.com/cox-programming-classes/AlgorithmicThinking.git
@@ -34,7 +34,7 @@ Fill them from inside the repository:
 git submodule update --init --recursive
 ```
 
-Each lesson folder now holds the exact commit this repository recorded, in a
+Each lesson folder now has the exact commit this repository recorded, in a
 "detached HEAD" state.  Before working in one, put it back on its branch:
 
 ```

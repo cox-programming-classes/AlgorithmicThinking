@@ -60,7 +60,7 @@ before anyone opens a file.
 
 > *"code will probably show up day 2"*
 
-- Code arrives on day 2, probably.
+- Code probably arrives on day 2.
 
 ## 2026-11-10 - what day 1 has to leave them with
 

@@ -2,17 +2,17 @@
 
 The spring follow-up to the fall C# course (`OODP_Lessons`).  It meets four
 times a cycle, from mid-January to the end of May.  It builds on the fall
-course rather than repeating it, and it's taught in Java, because that's what
+course and goes deeper, and it's taught in Java, because that's what
 the robots run.
 
 The course title is older than the course.  "Algorithmic thinking" is the vibe:
 thinking about processes, and how to translate them into the common language of
-humans and robots.  "Functional Programming" stays in the title because a
+humans and robots.  "Functional Programming" is still in the title because a
 course title can only change a little with each re-proposal.  The title doesn't
 set the syllabus.
 
 The material is the robot code, written over several years by students in this
-course.  `ReferenceCopy/` holds a snapshot of it taken on 2026-11-10.  The first
+course.  `ReferenceCopy/` is a snapshot of it, taken on 2026-11-10.  The first
 half of the course works in lesson starter repos beside it, each one stripped to
 what its lesson needs.  After the midterm (a point in the content, not a date),
 students work in the full code.  Some students are on the FTC team and some
@@ -36,7 +36,7 @@ work for whoever is there.
 
 ## The big themes
 
-| Pattern | What the course does with it | Where it lives in the code |
+| Pattern | What the course does with it | Where it is in the code |
 |---|---|---|
 | **Strategy** | the deep dive | `IControlStrategy` and the per-component strategy interfaces, then up through the layers |
 | **State** | revisited from the fall, and taken down the rabbit hole | `IState`, `StateMachine` |
@@ -53,14 +53,14 @@ Possible side tangents:
 ## Sequence
 
 The plan grows as the course does, the way the fall course's did.  This page
-holds what's settled, and leaves the rest open on purpose.
+records what's settled, and leaves the rest open on purpose.
 
 ### Settled
 
 1. **An overview of the Robot Object Model, using concrete objects.**  Students
    arrive with enough polymorphism for "Billy *is a* Robot" and "Billy *has a*
-   mecanum drive train."  The abstract layer and the higher-level strategies stay
-   out at the start.  This part takes a while.
+   mecanum drive train."  The abstract layer and the higher-level strategies are
+   left out at the start.  This part takes a while.
 2. **Dumb components.**  A component that defines its move commands in its own
    class means every instance of it reacts when the driver presses "A."
 3. **`IControlStrategy`.**  The Strategy pattern answers *how does this
@@ -100,6 +100,8 @@ Course/
   PLANNING_NOTES.md         decisions with sources, open questions, what's next
   HANDOFF.md                how this repository started
   SUBMODULES.md             cloning with the lesson repos, making and publishing a new one
+  sessions/                 one note per working session:  how the course got made
+  lessons/                  each lesson's plan, and the dialogue it was built from
 ReferenceCopy/              a snapshot of the robot code (2026-11-10), with the team's doc/
 Lesson01_RobotObjectModel/  the Lesson 1 starter:  the base bot, with dumb components
 ```

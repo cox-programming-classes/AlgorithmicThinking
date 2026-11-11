@@ -5,7 +5,7 @@ was turned down, and what's still open.  Newest entries go at the bottom of each
 section, with a date.  `HANDOFF.md` is where this started, and it stays as it
 was written.
 
-*Approved:* marks a decision Jason made.  *Under review:* marks a question or a
+*Approved:*  marks a decision Jason made.  *Under review:*  marks a question or a
 proposal still waiting on him.
 
 ## Goal
