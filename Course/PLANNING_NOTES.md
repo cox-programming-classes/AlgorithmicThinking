@@ -453,6 +453,27 @@ that project.  Jason:  *"go for it"*.
 - *Under review:*  the `cox-programming-classes` organization was assumed from
   OODP.  After publishing, check `.gitmodules` against where it actually went.
 
+### 2026-11-10 - on GitHub, public, CC BY-NC-SA
+
+> *"Yes, please create the parent repo.  These can be public though, my class
+> materials are open source.  (please add a CC license that is non-comercial
+> share alike)"*
+
+- *Approved:*  The parent and the lesson repos are public, in
+  `cox-programming-classes`.  Created with `gh repo create`.
+- *Approved:*  Course materials are licensed CC BY-NC-SA 4.0.  `LICENSE` in
+  each repo is the official legal text, downloaded from creativecommons.org.
+- The FTC SDK keeps *FIRST*'s BSD license:  `ReferenceCopy/LICENSE` in the
+  parent, and `LICENSE-FIRST` (moved there unchanged) in each lesson starter.
+  Each README says which license applies to what.  Third-party files in
+  `ReferenceCopy/doc/` (the game manual, LEGO's license) keep their own terms.
+- The clone command is at the top of the root `README.md`, so it travels with
+  the repository and shows on its GitHub page.
+- *Under review:*  the robot code in `TeamCode/` was written by students.  The
+  team repository it came from is public under BSD-3-Clause-Clear.  Whether
+  the CC license covers their code, or only Jason's materials, is Jason's call
+  and possibly the school's.
+
 ## What's next
 
 1. Jason reviews the new `README.md`.

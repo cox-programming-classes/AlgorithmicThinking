@@ -13,7 +13,7 @@ if it's already on GitHub.**  Push the lesson repo first, then this one.
 From the folder that should hold it:
 
 ```
-git clone --recurse-submodules https://github.com/<owner>/AlgorithmicThinking.git
+git clone --recurse-submodules https://github.com/cox-programming-classes/AlgorithmicThinking.git
 ```
 
 If it was already cloned without that flag, the lesson folders will be empty.
@@ -72,10 +72,38 @@ Register each new starter as a submodule as soon as it exists.  The steps:
 
 5. Commit `.gitmodules` and the new folder in this repository.
 
+## Publishing a starter with the GitHub CLI
+
+This is the way Lesson 1 went up, and it's the quickest.  It needs `gh`
+logged in on the computer (`gh auth status`; to log in, run
+`gh auth login -h github.com -p https -w` in a normal terminal and enter the
+one-time code it prints at https://github.com/login/device).
+
+From the top of this repository:
+
+```
+gh repo create cox-programming-classes/LessonNN_Name --public --source=LessonNN_Name --remote=origin --push
+```
+
+That creates the repository on GitHub, sets the lesson's `origin` to it, and
+pushes `main`, all in one step.  Lesson repos are public, like OODP's.
+
+**An `origin` is fine here, and only here.**  The rule against `git remote add`
+is about pointing at a GitHub repository that doesn't exist yet, which hides
+GitHub Desktop's Publish button.  `gh repo create` makes the repository first,
+so the `origin` it sets points at something real.
+
+Then check, and push this repository:
+
+```
+git config -f .gitmodules submodule.LessonNN_Name.url    # should match the new repo
+git submodule status                                      # no + or - in front
+```
+
 ## Publishing a starter from GitHub Desktop
 
-Do this before pushing this repository, every time a lesson repo has commits
-that this one points at.
+The other way, when `gh` isn't available.  Do this before pushing this
+repository, every time a lesson repo has commits that this one points at.
 
 1. **File > Add local repository**, and choose the lesson's folder.
 2. **Publish repository.**  Choose the `cox-programming-classes` organization,
