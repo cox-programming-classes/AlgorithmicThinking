@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="680" viewBox="0 0 1160 680">
+<title>The Robot Object Model:  a Robot has one DriveTrain and maybe a MechAssembly, which has components and maybe smaller MechAssemblies</title>
+<defs>
+<marker id="has" viewBox="0 0 20 20" refX="19" refY="10" markerWidth="22" markerHeight="22" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M1,2 L19,10 L1,18 z" fill="#22303C"/>
+</marker>
+<marker id="isa" viewBox="0 0 20 20" refX="19" refY="10" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M1,1 L19,10 L1,19 z" fill="#FFFFFF" stroke="#22303C" stroke-width="2"/>
+</marker>
+</defs>
+<rect width="1160" height="680" fill="#FFFFFF"/>
+<rect x="390" y="40" width="260" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="520.0" y="72" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="520.0" y="108" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">Robot</text>
+<rect x="90" y="290" width="300" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="240.0" y="322" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="240.0" y="358" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">DriveTrain</text>
+<rect x="610" y="290" width="340" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="780.0" y="322" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="780.0" y="358" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">MechAssembly</text>
+<rect x="600" y="540" width="360" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="780.0" y="572" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="780.0" y="608" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">MechComponent</text>
+<line x1="470.0" y1="132" x2="240.0" y2="290" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="331.0" y="205.0" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="end">exactly 1</text>
+<line x1="570.0" y1="132" x2="780.0" y2="290" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="699.0" y="205.0" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="start">0 or 1</text>
+<line x1="780.0" y1="382" x2="780.0" y2="540" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="804.0" y="469.0" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="start">some</text>
+<polyline points="900,290 900,235 1010,235 1010,318 950,318" fill="none" stroke="#22303C" stroke-width="3" stroke-linejoin="round" marker-end="url(#has)"/>
+<text x="1024" y="243" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="start">0 or more</text>
+<line x1="90" y1="610" x2="160" y2="610" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="176" y="618" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="22" fill="#22303C" font-weight="normal" font-style="normal" text-anchor="start">has</text>
+</svg>

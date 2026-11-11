@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1540" height="1040" viewBox="0 0 1540 1040">
+<title>The base bot&#x27;s classes, under the abstract Robot Object Model</title>
+<defs>
+<marker id="has" viewBox="0 0 20 20" refX="19" refY="10" markerWidth="22" markerHeight="22" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M1,2 L19,10 L1,18 z" fill="#22303C"/>
+</marker>
+<marker id="isa" viewBox="0 0 20 20" refX="19" refY="10" markerWidth="20" markerHeight="20" orient="auto" markerUnits="userSpaceOnUse">
+  <path d="M1,1 L19,10 L1,19 z" fill="#FFFFFF" stroke="#22303C" stroke-width="2"/>
+</marker>
+</defs>
+<rect width="1540" height="1040" fill="#FFFFFF"/>
+<rect x="560" y="40" width="260" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="690.0" y="72" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="690.0" y="108" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">Robot</text>
+<rect x="1060" y="40" width="260" height="92" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="3"/>
+<text x="1190.0" y="96" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#22303C" font-weight="bold" font-style="normal" text-anchor="middle">BaseBot</text>
+<rect x="270" y="300" width="300" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="420.0" y="332" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="420.0" y="368" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">DriveTrain</text>
+<rect x="830" y="300" width="340" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="1000.0" y="332" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="1000.0" y="368" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">MechAssembly</text>
+<rect x="1290" y="336" width="200" height="92" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="3"/>
+<text x="1390.0" y="392" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#22303C" font-weight="bold" font-style="normal" text-anchor="middle">Arm</text>
+<rect x="40" y="560" width="360" height="92" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="3"/>
+<text x="220.0" y="616" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#22303C" font-weight="bold" font-style="normal" text-anchor="middle">StandardTankDrive</text>
+<rect x="440" y="560" width="300" height="92" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="3"/>
+<text x="590.0" y="616" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#22303C" font-weight="bold" font-style="normal" text-anchor="middle">OneStickTank</text>
+<rect x="820" y="560" width="360" height="92" rx="10" fill="#EAF2FB" stroke="#1F4E79" stroke-width="3"/>
+<text x="1000.0" y="592" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="19" fill="#5B6B7A" font-weight="normal" font-style="normal" text-anchor="middle">«abstract»</text>
+<text x="1000.0" y="628" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#1F4E79" font-weight="bold" font-style="italic" text-anchor="middle">MechComponent</text>
+<rect x="640" y="820" width="380" height="92" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="3"/>
+<text x="830.0" y="876" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#22303C" font-weight="bold" font-style="normal" text-anchor="middle">DoublyLimitedMotor</text>
+<rect x="1080" y="820" width="220" height="92" rx="10" fill="#FFFFFF" stroke="#2B6CB0" stroke-width="3"/>
+<text x="1190.0" y="876" font-family="Consolas, Menlo, Monaco, monospace" font-size="28" fill="#22303C" font-weight="bold" font-style="normal" text-anchor="middle">Claw</text>
+<line x1="640.0" y1="132" x2="420.0" y2="300" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="506.0" y="210.0" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="end">exactly 1</text>
+<line x1="740.0" y1="132" x2="1000.0" y2="300" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="894.0" y="210.0" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="start">0 or 1</text>
+<line x1="1000.0" y1="392" x2="1000.0" y2="560" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="1024.0" y="484.0" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="start">some</text>
+<polyline points="1120,300 1120,245 1230,245 1230,328 1170,328" fill="none" stroke="#22303C" stroke-width="3" stroke-linejoin="round" marker-end="url(#has)"/>
+<text x="1244" y="253" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="23" fill="#22303C" font-weight="normal" font-style="italic" text-anchor="start">0 or more</text>
+<line x1="1060" y1="86.0" x2="820" y2="86.0" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<line x1="1290" y1="382.0" x2="1170" y2="382.0" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<line x1="220.0" y1="560" x2="360.0" y2="392" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<line x1="590.0" y1="560" x2="480.0" y2="392" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<line x1="830.0" y1="820" x2="940.0" y2="652" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<line x1="1190.0" y1="820" x2="1060.0" y2="652" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<line x1="40" y1="980" x2="110" y2="980" stroke="#22303C" stroke-width="3" marker-end="url(#has)"/>
+<text x="126" y="988" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="22" fill="#22303C" font-weight="normal" font-style="normal" text-anchor="start">has</text>
+<line x1="210" y1="980" x2="280" y2="980" stroke="#22303C" stroke-width="2.5" marker-end="url(#isa)"/>
+<text x="296" y="988" font-family="Segoe UI, Lato, Helvetica, Arial, sans-serif" font-size="22" fill="#22303C" font-weight="normal" font-style="normal" text-anchor="start">is a</text>
+</svg>

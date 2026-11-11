@@ -315,6 +315,26 @@ Choices for Jason to check:
 - *Approved, 2026-11-10:*  Chapter 1's first draft.  The *Under review* items
   above are still open; the draft goes to print as it is.
 
+## 2026-11-10 - the art, and the UML diagrams
+
+> *"we can recycle art from the other project.  that is fine.  If we need to
+> generate the UML art, that's a good thing to do now.  I thought I had that
+> somewhere..."*
+
+> *"don't forget that it is reasonable for a MechAssembly to contain another
+> MechAssembly.  so that UML diagram needs a circular has a reference as well"*
+
+- *Approved:*  recycle the Field Guide's art.  Its "Layered Robot Model"
+  picture is Chapter 1's title picture; its eight spot pictures and its cover
+  (a gear over `robot.update(gamepad1, gamepad2);`) came over unchanged.
+- The existing UML diagram wasn't found in any repository under `GitHub/`
+  (searched for PlantUML, Mermaid, draw.io, Graphviz, and image names).  So
+  `Course/reference/make_figures.py` draws two, in Jason's style:
+  `ch01_model` (1.3, replacing the ASCII stand-in) and `ch01_basebot` (1.9).
+- *Approved:*  a `MechAssembly` may contain another `MechAssembly`.  Both
+  diagrams have a "has, 0 or more" loop from `MechAssembly` back to itself, and
+  1.3's prose says so.
+
 ## The shape so far
 
 | Meeting | What happens |

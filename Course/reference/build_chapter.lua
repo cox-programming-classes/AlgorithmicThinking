@@ -44,12 +44,16 @@ end
 local CHAPTERS = {
   -- Lesson 1 runs five meetings.  Meeting 5 is hazy on purpose, and its part
   -- gets written once the plan settles it.
-  ["01"] = draft(1, "chapter_01_robot_object_model.md", {
+  ["01"] = (function() local cfg = draft(1, "chapter_01_robot_object_model.md", {
     { starts = nil },
     { starts = "# Part Two", note = "The configuration:  where the robot and the code meet." },
     { starts = "# Part Three", note = "The code, down the layers and back up." },
     { starts = "# Part Four", note = "Looking back over the layers, before the discussion." },
-  }),
+  })
+    -- Canvas pages name their figures bare, for the importer to upload.
+    cfg.image_folder = "figures/ch01"
+    return cfg
+  end)(),
 }
 
 local NBSP = "\u{A0}"

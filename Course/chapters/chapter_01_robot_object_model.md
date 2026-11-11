@@ -68,28 +68,16 @@ launcher are both mechanisms.
 Here is that shape as a diagram.  Each box is a kind of thing, and each arrow
 means "has":
 
-```
-            +---------+
-            |  Robot  |
-            +---------+
-             |       |
-          has 1   has 0 or 1
-             v       v
-  +------------+   +--------------+
-  | DriveTrain |   | MechAssembly |
-  +------------+   +--------------+
-                          |
-                       has some
-                          v
-                  +---------------+
-                  | MechComponent |
-                  +---------------+
-```
+![The Robot Object Model:  a Robot has exactly one DriveTrain and zero or one MechAssembly, and a MechAssembly has some MechComponents and may have smaller MechAssemblies.](figures/ch01/ch01_model.png){width=5in}
+
+The word «abstract» on every box comes back in 1.10.  For now, read each box as
+a kind of thing.
 
 A **component** is the smallest part that does one thing:  a single motor, a
 servo, a motor with the switches that stop it.  A **mech assembly** is a group
-of components that work together.  A robot has exactly one drive train, and it
-may or may not have a mech assembly.
+of components that work together, and it can contain smaller mech assemblies:
+that's the arrow that loops back to its own box.  A robot has exactly one drive
+train, and it may or may not have a mech assembly.
 
 You'll see this diagram again, often.
 
@@ -291,7 +279,11 @@ for.
 | `Robot` | the most general layer.  It has one drive train, and maybe a mech assembly, and doesn't care what either one is |
 
 These are the **layers of abstraction**, and they're the diagram from 1.3.  The
-code's classes are named for the boxes.
+code's classes are named for the boxes.  Here is the base bot's code drawn the
+same way.  The pale boxes are the layers.  Each white box is one of the base
+bot's own classes, with an arrow to the layer it belongs to.
+
+![The base bot's classes under the model:  BaseBot is a Robot, StandardTankDrive and OneStickTank are DriveTrains, Arm is a MechAssembly, and DoublyLimitedMotor and Claw are MechComponents.](figures/ch01/ch01_basebot.png){width=6in}
 
 Here's the top layer doing its whole job, in `Robot.java`:
 

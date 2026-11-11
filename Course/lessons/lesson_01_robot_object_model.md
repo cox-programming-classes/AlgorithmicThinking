@@ -143,7 +143,9 @@ behaviors.  A version already exists and can be regenerated, for handouts and
 the chapter.  It comes back every lesson, until students see it in their
 dreams.
 
-**[For Jason:  where the existing diagram lives, or how you regenerate it.]**
+The chapter's versions are drawn by `Course/reference/make_figures.py`:  the
+model alone (1.3), and the model with the base bot's classes (1.9).  A
+`MechAssembly` may contain smaller assemblies, so both show that loop.
 
 ---
 

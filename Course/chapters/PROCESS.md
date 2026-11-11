@@ -171,11 +171,26 @@ Close any of those PDFs before running it; the script stops if one is open.
 
 Build the book after any change to a chapter, and read the PDFs it cuts.
 
-Not set up yet:  the art.  A chapter's title-page picture
-(`build/book/art/chNN.png`), the spot pictures that fill large gaps
-(`spot_*.png`), the cover, and the one-line openings in `Course/chapters/book/`
-are all optional, and the book builds without them.  The Field Guide's
-`make_art.ps1` in the team repository draws robot-themed ones.
+**Figures and art.**  Run these before the book build when they change:
+
+```
+py Course/reference/make_figures.py
+powershell -ExecutionPolicy Bypass -File Course/reference/make_art.ps1
+powershell -ExecutionPolicy Bypass -File Course/reference/make_cover.ps1
+```
+
+- `make_figures.py` draws the chapters' UML diagrams as SVG, and exports PNGs
+  with Inkscape (`C:\Program Files\Inkscape`), into `Course/chapters/figures/`.
+  Those files are committed, since chapters embed them.
+- `make_art.ps1` and `make_cover.ps1` are recycled from the Field Guide.  They
+  draw each chapter's title picture, the spot pictures `finish_book.ps1` drops
+  into large gaps, and the cover, all into `build/book/`.  The book builds
+  without any of them.
+
+Not set up yet:  the one-line chapter openings in `Course/chapters/book/`.
+
+To look at the finished pages on this computer, render the PDF to images:
+`powershell -ExecutionPolicy Bypass -File Course/reference/preview_pages.ps1`.
 
 ---
 
