@@ -64,6 +64,8 @@ notes.  Open Claude Code in this folder once, then install the notes from there.
 
 ## Still open
 
-- The course's Canvas course ID.
+- Whether the course runs.  As of 2026-11-10, sign-ups are short.
+- The Canvas course ID.  There isn't one yet, and there won't be unless the
+  course runs.  Leave the Canvas tooling unconfigured until then.
 - Which parts of the robot code the course teaches from, and in what order.
 - Whether `doc/FlintLessons/` stays here as reference material or gets trimmed.
