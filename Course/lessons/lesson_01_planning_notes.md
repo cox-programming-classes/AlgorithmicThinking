@@ -310,6 +310,11 @@ Choices for Jason to check:
   vehicle" without buying a particular one.  It's Claude's.
 - The tagline is Jason's cold-open line.
 
+> *"this looks good, let's move to the print version~"*
+
+- *Approved, 2026-11-10:*  Chapter 1's first draft.  The *Under review* items
+  above are still open; the draft goes to print as it is.
+
 ## The shape so far
 
 | Meeting | What happens |

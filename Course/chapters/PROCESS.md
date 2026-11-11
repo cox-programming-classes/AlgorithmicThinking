@@ -154,9 +154,28 @@ Needs only pandoc 3.  It writes one Word file per meeting to
 page per meeting to `Course/chapters/build/canvas/`, with every style inline,
 because Canvas strips `<style>` blocks.  It keeps every double space.
 
-Not set up yet for this course:  the printed book, its PDFs, and the art
-(`finish_book.ps1` and friends in `OODP_Lessons/Course/reference/`).  They wait
-until there are several chapters.
+**The print version** is two more steps, on Windows with Microsoft Word:
+
+```
+pandoc lua Course/reference/build_chapter.lua book
+powershell -ExecutionPolicy Bypass -File Course/reference/finish_book.ps1
+```
+
+The first puts every chapter in the `BOOK` list into one Word file,
+`Course/chapters/build/book/Book_Draft.docx`, with a title page and a table of
+contents, and writes `meetings.tsv`.  The second has Word lay it out for
+double-sided printing, fill in the contents and page numbers, and export
+`Book_Draft.pdf`.  Then it cuts one PDF per meeting into
+`Course/chapters/build/pdf/`, so each handout matches the book page for page.
+Close any of those PDFs before running it; the script stops if one is open.
+
+Build the book after any change to a chapter, and read the PDFs it cuts.
+
+Not set up yet:  the art.  A chapter's title-page picture
+(`build/book/art/chNN.png`), the spot pictures that fill large gaps
+(`spot_*.png`), the cover, and the one-line openings in `Course/chapters/book/`
+are all optional, and the book builds without them.  The Field Guide's
+`make_art.ps1` in the team repository draws robot-themed ones.
 
 ---
 
