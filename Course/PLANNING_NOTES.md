@@ -198,6 +198,8 @@ drafted from it yet.
 - **Pinned, 2026-11-10:**  how earlier runs of the course went, what worked,
   and what Jason would change.  *"Thats a whole conversation of its own we
   should put a pin in."*  Come back to it before writing lesson plans.
+  *Superseded 2026-11-10:*  there are no written plans from earlier runs.
+  What they taught comes out lesson by lesson, as each is planned.
 
 - *Under review:*  **The laptop test setup.**  The proposal is a `src/test/java`
   folder in `TeamCode` with plain JUnit 4, as Android local unit tests that run
@@ -473,6 +475,36 @@ that project.  Jason:  *"go for it"*.
   team repository it came from is public under BSD-3-Clause-Clear.  Whether
   the CC license covers their code, or only Jason's materials, is Jason's call
   and possibly the school's.
+
+### 2026-11-10 - first round of lesson planning, and the pipeline
+
+> *"both of those are fine.  I don't think the .github workflow is working
+> correctly but I'm not interested in fixing that right now.  Let's start the
+> first round of lesson planning and and build the pipeline for translating
+> into Canvas+Flint+Textbook.  We'll practice on Lesson 1 (probably at least 4
+> class periods) and review before we build Lesson 2"*
+
+- *Approved:*  The student code stays under the CC license as is, and the
+  workflow stays as it is for now.  Jason doesn't think it works, and isn't
+  fixing it yet.
+- *Approved:*  Build the pipeline from lesson plan to Canvas, Flint, and the
+  textbook, practicing on Lesson 1.  Lesson 1 runs at least 4 class periods.
+  Review it all before Lesson 2.
+- On the pinned conversation about earlier runs:  *"I don't have written
+  lesson plans from the previous iterations of this course. Sorry.  I am only
+  able to write these things down effectively now with your help lol"*.  So
+  what earlier runs taught lives in Jason's head and in the code.  It comes out
+  lesson by lesson, as each one gets planned, and goes into that lesson's
+  teacher notes.  This replaces the pin.
+- A recurring course theme, from the Lesson 1 dialogue:  *"\"Layers of
+  Abstraction\" will be a recurring theme, it's a real onion and we'll keep
+  peeling back the layers...... not the same layers as the layers of
+  abstraction... maybe they are the same?...."*  Whether the course's onion
+  and the model's layers are the same thing is left open on purpose.  Lesson
+  planning dialogue lives in `Course/lessons/lesson_NN_planning_notes.md`.
+- Tools on this computer:  pandoc 3.13; Python 3.14 through the `py` launcher
+  (`python` itself isn't on the path); Word; Windows PowerShell 5.1, no
+  PowerShell 7.
 
 ## What's next
 
