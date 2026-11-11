@@ -10,6 +10,17 @@ if it's already on GitHub.**  Push the lesson repo first, then this one.
 
 ## Cloning this repository onto another computer
 
+On Windows, first, once per computer:
+
+```
+git config --global core.longpaths true
+```
+
+Some FTC SDK paths are long enough to pass Windows' 260-character path limit,
+especially under `ReferenceCopy/`.  Without this setting the clone stops with
+`Filename too long`, and the submodules never get fetched.  A Mac doesn't need
+it.
+
 From the folder that should hold it:
 
 ```
@@ -124,6 +135,7 @@ repository, commit the lesson folder (it shows as a changed submodule) and push.
 
 | What you see | What it means | Fix |
 |---|---|---|
+| `Filename too long` during a clone on Windows | a path passed Windows' 260-character limit, and the checkout stopped before the submodules | `git config --global core.longpaths true`, delete the half-made clone, and clone again |
 | A lesson folder is empty after cloning | the submodules were never fetched | `git submodule update --init --recursive` |
 | `did not contain` or `not our ref` | this repository points at a lesson commit that was never pushed | push that lesson repo from the computer that has the commit, then try again |
 | `Repository not found` | the URL in `.gitmodules` is wrong, the lesson isn't published yet, or you lack access | check `.gitmodules` against GitHub; fix with `git submodule set-url` |

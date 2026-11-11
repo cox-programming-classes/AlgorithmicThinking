@@ -6,6 +6,14 @@ earlier runs of it.
 
 ## Getting it onto a computer
 
+**On Windows, first, once per computer.**  Some FTC SDK file paths are long
+enough to pass Windows' 260-character limit, and the clone fails with
+`Filename too long`.  This lifts the limit for git:
+
+```
+git config --global core.longpaths true
+```
+
 The lesson starters are git submodules, so clone with them included:
 
 ```
